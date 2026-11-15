@@ -6,9 +6,9 @@ The animated hero background is the **Temple Night** world of
 [ThreeUI Community](https://github.com/MengTo/threeui) (commit 68802d5, package
 `@designcodeio/threeui`, file `src/shaders/temple-night/templeNightRenderer.js`). The renderer is
 used unmodified; it was only bundled together with Three.js and minified into
-`assets/temple-night.js`. `assets/hero-temple.js` is this site's own wrapper (pause/resume,
+`assets/temple-night.js`. `assets/stage.js` is this site's own scene manager (pause/resume,
 frame-rate cap, visibility pausing, context-loss handling, low-quality mode on small or low-core
-devices). The scene is fully procedural: no image, texture, font or video file is loaded. No ThreeUI
+devices, cross-fade between scenes). The scene is fully procedural: no image, texture, font or video file is loaded. No ThreeUI
 Pro or Beta component, remote thumbnail or preview is used, and this site makes no request to
 threeui.com.
 
@@ -38,6 +38,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Original scenes (not third-party code)
+
+The second background, "Moss Forest" (`assets/forest.js`), and the particle layer (`assets/fx.js`) were
+written for this site. The forest's grey-green mood is inspired by the Sylva landing page in ThreeUI
+Community, but no Sylva code, image or font is used.
 
 ## Three.js
 

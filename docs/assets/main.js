@@ -1,59 +1,70 @@
-// Page behaviour: lazy-load the 3D hero, respect motion preferences, copy buttons.
-const hero = document.getElementById('hero');
-const canvas = document.getElementById('hero-canvas');
-const toggle = document.getElementById('hero-toggle');
+// Page behaviour: 3D background stage (two scenes + particles), scene switching by section,
+// motion preferences, 3D card tilt, copy buttons.
+import { createStage } from './stage.js';
+
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 const lowPower = window.matchMedia('(max-width: 720px)').matches || (navigator.hardwareConcurrency || 4) <= 4;
 
-let api = null;
-let loading = null;
-let failed = false;
+const stage = createStage({ lowPower, maxFps: lowPower ? 30 : 60 });
+const toggle = document.getElementById('stage-toggle');
+const picks = [...document.querySelectorAll('[data-scene-pick]')];
+let mode = 'auto';          // 'auto' follows the section being read; 'night' / 'forest' lock one scene
 
-function render(playing) {
-  hero.classList.toggle('is-playing', playing);
+function renderControls() {
+  const playing = stage.isPlaying();
   toggle.setAttribute('aria-pressed', String(playing));
-  toggle.textContent = playing ? '暂停背景动画 · Pause' : '播放背景动画 · Play';
+  toggle.textContent = playing ? '暂停 Pause' : '播放 Play';
+  picks.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scenePick === mode)));
 }
-
-function fail() {
-  failed = true;
-  api = null;
-  hero.classList.remove('is-live', 'is-playing');
-  toggle.hidden = true; // static poster stays; nothing to control
-}
-
-function ensure() {
-  if (api || failed) return Promise.resolve(api);
-  if (!loading) {
-    loading = import('./hero-temple.js')
-      .then((mod) => mod.startHero(canvas, { lowPower, maxFps: lowPower ? 30 : 60, startPaused: true, onFail: fail }))
-      .then((instance) => {
-        api = instance;
-        if (api) hero.classList.add('is-live'); else fail();
-        return api;
-      })
-      .catch(() => { fail(); return null; });
-  }
-  return loading;
-}
+stage.onChange(renderControls);
 
 toggle.addEventListener('click', async () => {
-  const instance = await ensure();
-  if (!instance) return;
-  if (instance.isPlaying()) instance.pause(); else instance.play();
-  render(instance.isPlaying());
+  if (stage.isPlaying()) stage.pause(); else await stage.play();
+  renderControls();
 });
+picks.forEach((b) => b.addEventListener('click', () => {
+  mode = b.dataset.scenePick;
+  if (mode !== 'auto') stage.show(mode); else follow();
+  renderControls();
+}));
 
-reduce.addEventListener('change', () => { if (reduce.matches && api) { api.pause(); render(false); } });
+// Which scene does the section under the middle of the viewport ask for?
+const targets = [...document.querySelectorAll('[data-scene]')];
+let wanted = 'night', settle = 0;
+function follow() { if (mode === 'auto') stage.show(wanted); }
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    wanted = e.target.dataset.scene;
+    clearTimeout(settle);
+    settle = setTimeout(follow, 220);       // ignore fast fly-bys while scrolling
+  }
+}, { rootMargin: '-48% 0px -48% 0px' });
+targets.forEach((t) => io.observe(t));
 
-render(false);
+reduce.addEventListener('change', () => { if (reduce.matches) stage.pause(); });
+renderControls();
 if (!reduce.matches && !saveData && !lowPower) {
-  // 3D is optional and heavy: only start on its own on capable devices, once the page is loaded and idle.
-  // Phones and low-core machines keep the still poster until the visitor presses Play.
-  const start = () => ensure().then((instance) => { if (instance) { instance.play(); render(true); } });
+  // 3D is optional and heavy: start on its own only on capable devices, after load and when idle.
+  // Phones and low-core machines keep the still posters until the visitor presses Play.
   const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
-  window.addEventListener('load', () => idle(start), { once: true });
+  window.addEventListener('load', () => idle(() => stage.play()), { once: true });
+}
+
+// 3D tilt on project cards (fine pointers only, never with reduced motion).
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce.matches) {
+  document.querySelectorAll('.project').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--ry', ((x - .5) * 5).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((.5 - y) * 4).toFixed(2) + 'deg');
+      card.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+      card.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+    });
+    card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+  });
 }
 
 // Copy buttons for command blocks (clipboard may be unavailable; fail silently).

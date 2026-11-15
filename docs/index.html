@@ -11,6 +11,15 @@
 <body>
 <a class="skip" href="#projects">跳到项目 Skip to projects</a>
 
+<div class="stage" id="stage" aria-hidden="true">
+  <img class="stage-poster poster-night" src="assets/hero-poster.webp" alt="" width="1600" height="780" fetchpriority="high">
+  <div class="stage-poster poster-forest"></div>
+  <canvas class="scene" id="scene-night"></canvas>
+  <canvas class="scene" id="scene-forest"></canvas>
+  <canvas class="fx" id="fx"></canvas>
+  <div class="veil"></div>
+</div>
+
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#top">wuyi</a>
@@ -25,11 +34,7 @@
 </header>
 
 <main id="top">
-  <section class="hero" id="hero" aria-labelledby="hero-title" style="padding:0">
-    <div class="hero-bg" aria-hidden="true">
-      <img class="hero-poster" src="assets/hero-poster.webp" alt="" width="1600" height="780" fetchpriority="high">
-      <canvas class="hero-canvas" id="hero-canvas"></canvas>
-    </div>
+  <section class="hero" id="hero" data-scene="night" aria-labelledby="hero-title" style="padding:0">
     <div class="wrap">
       <div class="hero-inner">
         <p class="kicker">Data engineering · Java backend</p>
@@ -44,7 +49,6 @@
         </div>
       </div>
     </div>
-    <button class="btn hero-toggle" id="hero-toggle" type="button" aria-pressed="false">播放背景动画 · Play</button>
   </section>
 
   <section id="projects" aria-labelledby="projects-title">
@@ -54,7 +58,7 @@
         <p>三个项目都是本机单用户、只用合成数据。想看 Java 后端先看 DataGuard，数据开发先看 E-Commerce Order Pipeline，AI 应用 / 全栈先看 SignalHub。</p>
       </div>
 
-      <article class="project signalhub" aria-labelledby="p-signalhub">
+      <article class="project signalhub" data-scene="forest" aria-labelledby="p-signalhub">
         <div class="copy-col">
           <span class="tag">Java + Python · 求职情报工作台</span>
           <h3 id="p-signalhub">SignalHub</h3>
@@ -77,7 +81,7 @@
         </figure>
       </article>
 
-      <article class="project dataguard" aria-labelledby="p-dataguard">
+      <article class="project dataguard" data-scene="night" aria-labelledby="p-dataguard">
         <div class="copy-col">
           <span class="tag">Java · 订单 CSV 数据质量检查</span>
           <h3 id="p-dataguard">DataGuard</h3>
@@ -101,7 +105,7 @@
         </figure>
       </article>
 
-      <article class="project ecommerce" aria-labelledby="p-ecommerce">
+      <article class="project ecommerce" data-scene="forest" aria-labelledby="p-ecommerce">
         <div class="copy-col">
           <span class="tag">Python · 批处理 ETL</span>
           <h3 id="p-ecommerce">E-Commerce Order Pipeline</h3>
@@ -126,7 +130,7 @@
     </div>
   </section>
 
-  <section id="evidence" aria-labelledby="evidence-title" style="background:var(--bg-2);border-block:1px solid var(--line)">
+  <section id="evidence" data-scene="night" aria-labelledby="evidence-title">
     <div class="wrap">
       <div class="section-head">
         <h2 id="evidence-title">可验证事实 <span lang="en">Checkable facts</span></h2>
@@ -142,7 +146,7 @@
     </div>
   </section>
 
-  <section id="architecture" aria-labelledby="arch-title">
+  <section id="architecture" data-scene="forest" aria-labelledby="arch-title">
     <div class="wrap">
       <div class="section-head">
         <h2 id="arch-title">架构 <span lang="en">Architecture</span></h2>
@@ -183,7 +187,7 @@
     </div>
   </section>
 
-  <section id="reproduce" aria-labelledby="repro-title" style="background:var(--bg-2);border-block:1px solid var(--line)">
+  <section id="reproduce" data-scene="night" aria-labelledby="repro-title">
     <div class="wrap">
       <div class="section-head">
         <h2 id="repro-title">自己跑一遍 <span lang="en">Run it yourself</span></h2>
@@ -223,7 +227,7 @@ bash scripts/run.sh</code></pre>
     </div>
   </section>
 
-  <section id="stack" aria-labelledby="stack-title">
+  <section id="stack" data-scene="forest" aria-labelledby="stack-title">
     <div class="wrap">
       <div class="section-head"><h2 id="stack-title">技术栈 <span lang="en">Stack</span></h2><p>只列出项目里实际用到的。</p></div>
       <div class="stack">
@@ -249,9 +253,16 @@ bash scripts/run.sh</code></pre>
 <footer>
   <div class="wrap">
     <p>GitHub：<a href="https://github.com/wuyi060531-del">wuyi060531-del</a>。联系请通过 GitHub。</p>
-    <p>背景 3D 场景是 ThreeUI Community 的 Temple Night 组件（MIT，© 2026 Meng To），随 Three.js（MIT）一起打包，许可证见 <a href="THIRD_PARTY_NOTICES.md">THIRD_PARTY_NOTICES</a>。页面不加载远程字体、脚本或图片。</p>
+    <p>背景有两个 3D 场景：“夜庙”是 ThreeUI Community 的 Temple Night 组件（MIT，© 2026 Meng To，随 Three.js 一起打包）；“雾林”和粒子层是本站原创，配色参考了 ThreeUI 的 Sylva 页面但未使用其代码，许可证见 <a href="THIRD_PARTY_NOTICES.md">THIRD_PARTY_NOTICES</a>。页面不加载远程字体、脚本或图片。</p>
   </div>
 </footer>
+<div class="stage-controls" role="group" aria-label="背景控制 Background">
+  <button class="chip" type="button" data-scene-pick="auto" aria-pressed="true">自动 Auto</button>
+  <button class="chip" type="button" data-scene-pick="night" aria-pressed="false">夜庙 Temple</button>
+  <button class="chip" type="button" data-scene-pick="forest" aria-pressed="false">雾林 Forest</button>
+  <button class="chip" type="button" id="stage-toggle" aria-pressed="false">播放 Play</button>
+</div>
+
 <script type="module" src="assets/main.js"></script>
 </body>
 </html>
