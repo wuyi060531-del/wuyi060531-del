@@ -26,9 +26,10 @@ function fail() {
 function ensure() {
   if (api || failed) return Promise.resolve(api);
   if (!loading) {
-    loading = import('./hero-webgl.js')
-      .then((mod) => {
-        api = mod.startHero(canvas, { scale: lowPower ? 0.5 : 0.75, maxFps: lowPower ? 30 : 60, startPaused: true, onFail: fail });
+    loading = import('./hero-temple.js')
+      .then((mod) => mod.startHero(canvas, { lowPower, maxFps: lowPower ? 30 : 60, startPaused: true, onFail: fail }))
+      .then((instance) => {
+        api = instance;
         if (api) hero.classList.add('is-live'); else fail();
         return api;
       })
@@ -47,8 +48,9 @@ toggle.addEventListener('click', async () => {
 reduce.addEventListener('change', () => { if (reduce.matches && api) { api.pause(); render(false); } });
 
 render(false);
-if (!reduce.matches && !saveData) {
-  // 3D is optional: wait until the page is loaded and the browser is idle.
+if (!reduce.matches && !saveData && !lowPower) {
+  // 3D is optional and heavy: only start on its own on capable devices, once the page is loaded and idle.
+  // Phones and low-core machines keep the still poster until the visitor presses Play.
   const start = () => ensure().then((instance) => { if (instance) { instance.play(); render(true); } });
   const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 400));
   window.addEventListener('load', () => idle(start), { once: true });

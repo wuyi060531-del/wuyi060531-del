@@ -24,7 +24,7 @@ Real Chromium renders (Playwright, headless, software WebGL) of `docs/index.html
 | Images that failed to load | none visible; `dataguard-mobile.webp` is `display:none` below 720 px so it is never requested there |
 | Animation loop (rAF callbacks per 600 ms) | playing 36, after Pause 0, after Play 37, after scrolling past the hero 0 |
 | WebGL unavailable (`getContext` returns null) | poster shown, toggle hidden, no console output, no errors |
-| `prefers-reduced-motion: reduce` | `hero-webgl.js` is not requested and no frame loop runs until the visitor presses Play |
+| `prefers-reduced-motion: reduce` | `hero-temple.js` / `temple-night.js` are not requested and no frame loop runs until the visitor presses Play |
 | Keyboard | first 9 tab stops all show a 3 px solid focus outline |
 | Text contrast | tokens 6.6:1 to 16.9:1; hero text over the brightest rendered background pixel 7.0:1 to 9.7:1 |
 

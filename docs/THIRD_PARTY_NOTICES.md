@@ -1,13 +1,16 @@
 # Third-party notices
 
-## ThreeUI Community: Stream Convergence shader
+## ThreeUI Community: Temple Night world
 
-The animated hero background (`assets/hero-webgl.js`) is adapted from the **Stream Convergence**
-component of [ThreeUI Community](https://github.com/MengTo/threeui) (commit 68802d5, package
-`@designcodeio/threeui`). The fragment shader is unchanged; the React wrapper was rewritten as plain
-JavaScript with pause/resume, resolution scaling, a frame-rate cap, visibility pausing and
-context-loss handling. No ThreeUI Pro or Beta component, remote thumbnail, video or image is used,
-and this site makes no request to threeui.com.
+The animated hero background is the **Temple Night** world of
+[ThreeUI Community](https://github.com/MengTo/threeui) (commit 68802d5, package
+`@designcodeio/threeui`, file `src/shaders/temple-night/templeNightRenderer.js`). The renderer is
+used unmodified; it was only bundled together with Three.js and minified into
+`assets/temple-night.js`. `assets/hero-temple.js` is this site's own wrapper (pause/resume,
+frame-rate cap, visibility pausing, context-loss handling, low-quality mode on small or low-core
+devices). The scene is fully procedural: no image, texture, font or video file is loaded. No ThreeUI
+Pro or Beta component, remote thumbnail or preview is used, and this site makes no request to
+threeui.com.
 
 ThreeUI's repository states that its Community application code and component code are MIT licensed.
 Its licence text follows, as the licence requires:
@@ -35,6 +38,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Three.js
+
+`assets/temple-night.js` includes Three.js r149, MIT License, Copyright © 2010-2023 three.js
+authors. Licence: https://github.com/mrdoob/three.js/blob/dev/LICENSE
 
 ## Project screenshots and the mirrored demo
 
