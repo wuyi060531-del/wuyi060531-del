@@ -1,6 +1,7 @@
 // Page behaviour: 3D background stage (two scenes + particles), scene switching by section,
-// motion preferences, 3D card tilt, copy buttons.
+// motion preferences, copy buttons. Pointer/scroll UI effects live in ui.js.
 import { createStage } from './stage.js';
+import { initUI } from './ui.js';
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 const saveData = Boolean(navigator.connection && navigator.connection.saveData);
@@ -53,20 +54,7 @@ if (!reduce.matches && !saveData && !lowPower) {
   window.addEventListener('load', () => idle(() => stage.play()), { once: true });
 }
 
-// 3D tilt on project cards (fine pointers only, never with reduced motion).
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce.matches) {
-  document.querySelectorAll('.project').forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      card.style.setProperty('--ry', ((x - .5) * 5).toFixed(2) + 'deg');
-      card.style.setProperty('--rx', ((.5 - y) * 4).toFixed(2) + 'deg');
-      card.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
-      card.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
-    });
-    card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
-  });
-}
+initUI();
 
 // Copy buttons for command blocks (clipboard may be unavailable; fail silently).
 document.querySelectorAll('pre').forEach((block) => {
@@ -78,10 +66,11 @@ document.querySelectorAll('pre').forEach((block) => {
     try {
       await navigator.clipboard.writeText(block.querySelector('code').innerText);
       button.textContent = '已复制 Copied';
+      button.classList.add('done');
     } catch {
       button.textContent = '请手动选择 Select';
     }
-    setTimeout(() => { button.textContent = '复制 Copy'; }, 1800);
+    setTimeout(() => { button.textContent = '复制 Copy'; button.classList.remove('done'); }, 1800);
   });
   block.appendChild(button);
 });

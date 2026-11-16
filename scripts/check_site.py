@@ -18,7 +18,7 @@ DOCS = ROOT / "docs"
 MANIFEST = ROOT / "scripts" / "site-manifest.json"
 MAX_FILE = 1_500_000          # bytes, per file
 MAX_TOTAL = 8_000_000         # bytes, whole site
-OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js"]          # hand-written; the bundle is third-party
+OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js", "ui.js"]          # hand-written; the bundle is third-party
 LINK_ALLOW = ("https://github.com/wuyi060531-del", "https://github.com/MengTo/threeui")
 EMAIL_ALLOW = re.compile(r"@users\.noreply\.github\.com$|^noreply@")
 errors: list[str] = []
@@ -182,7 +182,7 @@ def check_required(pages) -> None:
         if not (DOCS / name).exists():
             err(f"docs/{name} is required")
     index = (DOCS / "index.html").read_text(encoding="utf-8")
-    if 'class="ai"' not in index or "AI" not in index:
+    if not re.search(r'class="(?:[^"]*\s)?ai(?:\s[^"]*)?"', index) or "AI" not in index:
         err("index.html: AI-assistance statement missing")
     if "THIRD_PARTY_NOTICES.md" not in index:
         err("index.html: must link THIRD_PARTY_NOTICES.md")

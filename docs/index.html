@@ -20,45 +20,55 @@
   <div class="veil"></div>
 </div>
 
+<div class="progress" id="progress" aria-hidden="true"></div>
+<canvas class="sparks" id="sparks" aria-hidden="true"></canvas>
+
 <header class="site-header">
-  <div class="wrap">
+  <div class="bar">
     <a class="brand" href="#top">wuyi</a>
     <nav aria-label="页面导航 Page">
-      <a href="#projects">项目</a>
-      <a href="#evidence">可验证事实</a>
-      <a href="#architecture">架构</a>
-      <a href="#reproduce">运行说明</a>
-      <a href="#about">关于 AI</a>
+      <a href="#projects" data-nav="projects">项目</a>
+      <a href="#evidence" data-nav="evidence">可验证事实</a>
+      <a href="#architecture" data-nav="architecture">架构</a>
+      <a href="#reproduce" data-nav="reproduce">运行说明</a>
+      <a href="#about" data-nav="about">关于 AI</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
-  <section class="hero" id="hero" data-scene="night" aria-labelledby="hero-title" style="padding:0">
+  <section class="hero" id="hero" data-scene="night" aria-labelledby="hero-title">
     <div class="wrap">
       <div class="hero-inner">
-        <p class="kicker">Data engineering · Java backend</p>
-        <h1 id="hero-title">三个能运行、有测试、写明局限的小系统</h1>
-        <p class="sub-en">Three small systems I can run, test and explain.</p>
-        <p class="lead">我是西南财经大学数据科学与大数据技术专业本科生（预计 2028 年毕业），正在找 2027 年的实习：数据开发、Java 后端或 AI 应用开发。这里是三个项目的入口：每个都有可复现的运行步骤、测试证据和清楚的限制。</p>
-        <p class="lead-en">Undergraduate in Data Science and Big Data Technology (expected 2028), looking for a 2027 internship in data engineering, Java backend or AI application development.</p>
-        <div class="cta">
-          <a class="btn primary" href="#projects">看三个项目</a>
-          <a class="btn" href="https://github.com/wuyi060531-del">GitHub</a>
-          <a class="btn" href="#reproduce">自己跑一遍</a>
+        <p class="kicker rise">Data engineering · Java backend</p>
+        <h1 id="hero-title" class="rise"><span class="ph">从数据出发，</span><span class="ph">构建可验证的系统。</span></h1>
+        <p class="sub-en rise">Building verifiable systems, starting from data.</p>
+        <p class="lead rise">西南财经大学 数据科学与大数据技术本科，预计 2028 年毕业，正在找 2027 年实习：数据开发、Java 后端或 AI 应用开发。下面是三个都能在本机运行、带测试、写明限制的项目。</p>
+        <p class="lead-en rise">Python data engineering and Java backend, shown through three runnable, tested projects with their limits stated.</p>
+        <div class="cta rise">
+          <a class="btn primary" href="#projects">查看项目 <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn" href="https://github.com/wuyi060531-del">GitHub <span class="arr" aria-hidden="true">↗</span></a>
+          <a class="btn text" href="#reproduce">自己跑一遍</a>
         </div>
       </div>
+      <ol class="hero-index" aria-label="三个项目 The three projects">
+        <li><a href="#p-signalhub-card"><span class="n">01</span><b>SignalHub</b><small>Java + Python · 求职情报工作台</small></a></li>
+        <li><a href="#p-dataguard-card"><span class="n">02</span><b>DataGuard</b><small>Java · 订单 CSV 数据质量检查</small></a></li>
+        <li><a href="#p-ecommerce-card"><span class="n">03</span><b>Order Pipeline</b><small>Python · 批处理 ETL</small></a></li>
+      </ol>
     </div>
   </section>
 
   <section id="projects" aria-labelledby="projects-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="eyebrow">01 · Projects</p>
         <h2 id="projects-title">项目 <span lang="en">Projects</span></h2>
         <p>三个项目都是本机单用户、只用合成数据。想看 Java 后端先看 DataGuard，数据开发先看 E-Commerce Order Pipeline，AI 应用 / 全栈先看 SignalHub。</p>
       </div>
 
-      <article class="project signalhub" data-scene="forest" aria-labelledby="p-signalhub">
+      <article class="project signalhub glow reveal" id="p-signalhub-card" data-scene="forest" aria-labelledby="p-signalhub">
+        <span class="num" aria-hidden="true">01</span>
         <div class="copy-col">
           <span class="tag">Java + Python · 求职情报工作台</span>
           <h3 id="p-signalhub">SignalHub</h3>
@@ -71,8 +81,8 @@
           <ul class="chips" aria-label="技术栈"><li>Java 21</li><li>Spring Boot 4.1</li><li>Python 3.12 Worker</li><li>PostgreSQL 17</li><li>Flyway V1–V12</li><li>Docker Compose</li></ul>
           <p class="limit"><strong>限制：</strong>仅本机单用户、无认证；连续 72 小时稳定性运行尚未完成；演示数据是合成的。</p>
           <div class="links">
-            <a class="btn" href="https://github.com/wuyi060531-del/signalhub">源码 Source</a>
-            <a class="btn" href="https://github.com/wuyi060531-del/signalhub/blob/main/docs/PUBLIC_DEMO.md">合成演示步骤</a>
+            <a class="btn sm" href="https://github.com/wuyi060531-del/signalhub">源码 Source</a>
+            <a class="btn sm" href="https://github.com/wuyi060531-del/signalhub/blob/main/docs/PUBLIC_DEMO.md">合成演示步骤</a>
           </div>
         </div>
         <figure>
@@ -81,7 +91,8 @@
         </figure>
       </article>
 
-      <article class="project dataguard" data-scene="night" aria-labelledby="p-dataguard">
+      <article class="project dataguard glow reveal" id="p-dataguard-card" data-scene="night" aria-labelledby="p-dataguard">
+        <span class="num" aria-hidden="true">02</span>
         <div class="copy-col">
           <span class="tag">Java · 订单 CSV 数据质量检查</span>
           <h3 id="p-dataguard">DataGuard</h3>
@@ -94,8 +105,8 @@
           <ul class="chips" aria-label="技术栈"><li>Java 21</li><li>Spring Boot</li><li>JDBC</li><li>H2 / MySQL</li><li>HTML / CSS / JS</li><li>Docker</li></ul>
           <p class="limit"><strong>限制：</strong>仅本机单用户；断电恢复和备份恢复没有验证过。</p>
           <div class="links">
-            <a class="btn" href="https://github.com/wuyi060531-del/dataguard">源码 Source</a>
-            <a class="btn" href="https://github.com/wuyi060531-del/dataguard/blob/main/docs/VALIDATION.md">验收记录</a>
+            <a class="btn sm" href="https://github.com/wuyi060531-del/dataguard">源码 Source</a>
+            <a class="btn sm" href="https://github.com/wuyi060531-del/dataguard/blob/main/docs/VALIDATION.md">验收记录</a>
           </div>
         </div>
         <figure class="has-phone">
@@ -105,7 +116,8 @@
         </figure>
       </article>
 
-      <article class="project ecommerce" data-scene="forest" aria-labelledby="p-ecommerce">
+      <article class="project ecommerce glow reveal" id="p-ecommerce-card" data-scene="forest" aria-labelledby="p-ecommerce">
+        <span class="num" aria-hidden="true">03</span>
         <div class="copy-col">
           <span class="tag">Python · 批处理 ETL</span>
           <h3 id="p-ecommerce">E-Commerce Order Pipeline</h3>
@@ -118,8 +130,8 @@
           <ul class="chips" aria-label="技术栈"><li>Python</li><li>Pandas</li><li>SQLite / MySQL</li><li>pytest</li><li>GitHub Actions</li></ul>
           <p class="limit"><strong>限制：</strong>仅合成数据；性能脚本是单机实验，不代表生产性能。站内静态演示是该项目 <a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline/pull/7">PR #7</a>（尚未合并）在 commit 21017a1 的快照。</p>
           <div class="links">
-            <a class="btn" href="demos/ecommerce-order-pipeline/index.html">打开静态演示 Open demo</a>
-            <a class="btn" href="https://github.com/wuyi060531-del/ecommerce-order-pipeline">源码 Source</a>
+            <a class="btn sm" href="demos/ecommerce-order-pipeline/index.html">打开静态演示 Open demo</a>
+            <a class="btn sm" href="https://github.com/wuyi060531-del/ecommerce-order-pipeline">源码 Source</a>
           </div>
         </div>
         <figure>
@@ -132,28 +144,30 @@
 
   <section id="evidence" data-scene="night" aria-labelledby="evidence-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="eyebrow">02 · Evidence</p>
         <h2 id="evidence-title">可验证事实 <span lang="en">Checkable facts</span></h2>
         <p>下面每个数字都来自对应仓库的 README，点开可以核对；它们不是用户量或业务收益。</p>
       </div>
       <ul class="stats">
-        <li class="stat"><b>29 / 11 / 11</b><span>DataGuard 内置样本：正常记录 / 异常记录 / 问题数，质量分 72.50%。</span><a href="https://github.com/wuyi060531-del/dataguard#快速演示">README</a></li>
-        <li class="stat"><b>30 = 26+3+1</b><span>订单管道：接收 / 隔离 / 重复副本；重跑写入 0 行。</span><a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline#快速运行">README</a></li>
-        <li class="stat"><b>6 项零跳过</b><span>DataGuard 共 96 项 Java 测试，其中 6 项需要真实 MySQL，CI 要求它们零跳过。</span><a href="https://github.com/wuyi060531-del/dataguard#测试">README</a></li>
-        <li class="stat"><b>Flyway V1–V12</b><span>SignalHub 的表结构只通过 12 个迁移脚本创建和演进。</span><a href="https://github.com/wuyi060531-del/signalhub#架构">README</a></li>
+        <li class="stat glow reveal"><b>29 / 11 / 11</b><span>DataGuard 内置样本：正常记录 / 异常记录 / 问题数，质量分 72.50%。</span><a href="https://github.com/wuyi060531-del/dataguard#快速演示">README</a></li>
+        <li class="stat glow reveal"><b>30 = 26+3+1</b><span>订单管道：接收 / 隔离 / 重复副本；重跑写入 0 行。</span><a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline#快速运行">README</a></li>
+        <li class="stat glow reveal"><b>6 项零跳过</b><span>DataGuard 共 96 项 Java 测试，其中 6 项需要真实 MySQL，CI 要求它们零跳过。</span><a href="https://github.com/wuyi060531-del/dataguard#测试">README</a></li>
+        <li class="stat glow reveal"><b>Flyway V1–V12</b><span>SignalHub 的表结构只通过 12 个迁移脚本创建和演进。</span><a href="https://github.com/wuyi060531-del/signalhub#架构">README</a></li>
       </ul>
-      <p class="note">测试数量会随提交变化，请以各仓库 README 和 GitHub Actions 的最新记录为准。</p>
+      <p class="note reveal">测试数量会随提交变化，请以各仓库 README 和 GitHub Actions 的最新记录为准。</p>
     </div>
   </section>
 
   <section id="architecture" data-scene="forest" aria-labelledby="arch-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="eyebrow">03 · Architecture</p>
         <h2 id="arch-title">架构 <span lang="en">Architecture</span></h2>
         <p>三个项目的主干，一眼看完；细节在各仓库的 ARCHITECTURE 文档里。</p>
       </div>
       <div class="arch">
-        <div class="arch-block signalhub">
+        <div class="arch-block glow reveal signalhub">
           <h3>SignalHub：两个进程，一个数据库</h3>
           <ol class="flow">
             <li>本地浏览器</li>
@@ -163,7 +177,7 @@
             <li>同一个 PostgreSQL<small>原文 / 实体 / 版本</small></li>
           </ol>
         </div>
-        <div class="arch-block dataguard">
+        <div class="arch-block glow reveal dataguard">
           <h3>DataGuard：分层，报告与状态同事务</h3>
           <ol class="flow">
             <li>Controller<small>校验 HTTP 和 DTO</small></li>
@@ -173,7 +187,7 @@
             <li>H2 或 MySQL<small>报告 + 问题 + 状态一起提交</small></li>
           </ol>
         </div>
-        <div class="arch-block ecommerce">
+        <div class="arch-block glow reveal ecommerce">
           <h3>Order Pipeline：只读输入，隔离留痕，一次提交</h3>
           <ol class="flow">
             <li>只读 CSV</li>
@@ -189,12 +203,13 @@
 
   <section id="reproduce" data-scene="night" aria-labelledby="repro-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
+        <p class="eyebrow">04 · Run it</p>
         <h2 id="repro-title">自己跑一遍 <span lang="en">Run it yourself</span></h2>
         <p>命令直接取自各仓库 README。最快的是订单管道（只需 Python，不需要数据库或 Docker）。</p>
       </div>
 
-      <details open>
+      <details class="glow reveal" open>
         <summary>E-Commerce Order Pipeline · Python 3.12，最快</summary>
         <div class="run">
 <pre><code>python3.12 -m venv .venv
@@ -204,7 +219,7 @@
         </div>
       </details>
 
-      <details>
+      <details class="glow reveal">
         <summary>DataGuard · JDK 21、Bash、curl 或 wget、unzip</summary>
         <div class="run">
 <pre><code>bash scripts/mvn.sh clean verify
@@ -213,7 +228,7 @@ bash scripts/run.sh</code></pre>
         </div>
       </details>
 
-      <details>
+      <details class="glow reveal">
         <summary>SignalHub · Python 3.12、JDK 21、Maven 3.9、PostgreSQL 17</summary>
         <div class="run">
 <pre><code>python3.12 -m venv .venv
@@ -229,20 +244,20 @@ bash scripts/run.sh</code></pre>
 
   <section id="stack" data-scene="forest" aria-labelledby="stack-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="stack-title">技术栈 <span lang="en">Stack</span></h2><p>只列出项目里实际用到的。</p></div>
+      <div class="section-head reveal"><p class="eyebrow">05 · Stack</p><h2 id="stack-title">技术栈 <span lang="en">Stack</span></h2><p>只列出项目里实际用到的。</p></div>
       <div class="stack">
-        <div><h3>Python</h3><p>Pandas、pytest，SignalHub 的 Worker 与 ETL</p></div>
-        <div><h3>Java</h3><p>Java 21、Spring Boot、JDBC</p></div>
-        <div><h3>数据库 Databases</h3><p>PostgreSQL 17、MySQL 8.4、SQLite、H2、Flyway</p></div>
-        <div><h3>交付 Delivery</h3><p>GitHub Actions、Docker、Docker Compose</p></div>
+        <div class="glow reveal"><h3>Python</h3><p>Pandas、pytest，SignalHub 的 Worker 与 ETL</p></div>
+        <div class="glow reveal"><h3>Java</h3><p>Java 21、Spring Boot、JDBC</p></div>
+        <div class="glow reveal"><h3>数据库 Databases</h3><p>PostgreSQL 17、MySQL 8.4、SQLite、H2、Flyway</p></div>
+        <div class="glow reveal"><h3>交付 Delivery</h3><p>GitHub Actions、Docker、Docker Compose</p></div>
       </div>
     </div>
   </section>
 
-  <section id="about" aria-labelledby="about-title" style="padding-top:0">
+  <section id="about" aria-labelledby="about-title" style="padding-top:24px">
     <div class="wrap">
-      <div class="ai">
-        <h2 id="about-title" style="font-size:22px">关于 AI 协助 <span lang="en">About AI assistance</span></h2>
+      <div class="ai reveal">
+        <h2 id="about-title">关于 AI 协助 <span lang="en">About AI assistance</span></h2>
         <p>这三个项目是在 AI 编码助手（Codex 和 Claude）协助下完成的：需求和设计取舍由我决定，工具协助编写、评审和写文档。我不会把 AI 写的代码说成纯手写，每个仓库的 README 也是同样的说明。这个页面本身同样由 Claude 协助搭建。</p>
         <p lang="en">I built these projects with AI coding assistants (Codex and Claude). I set the requirements and made the design decisions; the tools helped write, review and document the code. This page was also built with Claude's help.</p>
       </div>
