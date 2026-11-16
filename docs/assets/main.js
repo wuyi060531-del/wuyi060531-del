@@ -14,13 +14,14 @@ let mode = 'auto';          // 'auto' follows the section being read; 'night' / 
 function renderControls() {
   const playing = stage.isPlaying();
   toggle.setAttribute('aria-pressed', String(playing));
-  toggle.textContent = playing ? '暂停 Pause' : '播放 Play';
+  toggle.textContent = playing ? '暂停 Pause' : document.body.dataset.degraded ? '降级 · 播放 Play' : '播放 Play';
+  toggle.title = !playing && document.body.dataset.degraded ? '设备较慢，已自动暂停 3D 以保证流畅；点击仍可强制播放。Slow device: 3D was paused automatically; press to play anyway.' : '';
   picks.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scenePick === mode)));
 }
 stage.onChange(renderControls);
 
 toggle.addEventListener('click', async () => {
-  if (stage.isPlaying()) stage.pause(); else await stage.play();
+  if (stage.isPlaying()) stage.pause(); else await stage.play(true);
   renderControls();
 });
 picks.forEach((b) => b.addEventListener('click', () => {

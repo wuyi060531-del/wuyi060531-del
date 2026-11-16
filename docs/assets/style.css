@@ -166,7 +166,7 @@ footer p { margin: 0 0 8px; }
 :root { --glass: rgba(9, 13, 24, .8); --glass-line: rgba(255,255,255,.1); }
 body[data-scene="forest"] { --glass: rgba(10, 18, 12, .8); }
 .section-head { padding: 18px 24px; background: var(--glass); border: 1px solid var(--glass-line); border-radius: 16px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); width: fit-content; max-width: 70ch; }
-.project, .stat, .stack div, details, .arch-block, .ai, .note { background: var(--glass); backdrop-filter: blur(14px) saturate(1.15); -webkit-backdrop-filter: blur(14px) saturate(1.15); transition: background .8s ease; }
+.project, .stat, .stack div, details, .arch-block, .ai, .note { background: var(--glass); backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1); transition: background .8s ease; }
 .project { border-color: var(--glass-line); }
 .note { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--glass-line); }
 footer { background: var(--glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); margin-top: 24px; }
