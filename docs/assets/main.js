@@ -72,5 +72,8 @@ document.querySelectorAll('pre').forEach((block) => {
     }
     setTimeout(() => { button.textContent = '复制 Copy'; button.classList.remove('done'); }, 1800);
   });
-  block.appendChild(button);
+  const wrap = document.createElement('div');       // the button lives outside the scrolling <pre>, so it never covers or scrolls with the code
+  wrap.className = 'codebox';
+  block.parentNode.insertBefore(wrap, block);
+  wrap.append(block, button);
 });

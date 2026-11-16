@@ -90,7 +90,7 @@ body[data-scene="forest"] .veil { background: radial-gradient(120% 90% at 50% 40
 .btn.text::before { display: none; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 120px 0 76px !important; }
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 120px 0 76px !important; }
 .hero-inner { position: relative; max-width: 640px; padding-bottom: 36px; transform: translate3d(calc(var(--px) * -6px), calc(var(--py) * -4px), 0); transition: transform .35s var(--ease); }
 /* a soft local scrim instead of a boxed panel: keeps the 3D scene visible around the text */
 .hero-inner::before { content: ""; position: absolute; inset: -80px -130px -40px -170px; z-index: -1; pointer-events: none; background: radial-gradient(70% 78% at 36% 56%, rgba(4, 7, 13, .9) 0%, rgba(4, 7, 13, .74) 46%, rgba(4, 7, 13, 0) 82%); }
@@ -124,13 +124,14 @@ h1 .ph:last-child { background: linear-gradient(95deg, #fff 10%, var(--accent-2)
 
 /* ---------- sections ---------- */
 h1, h2, h3 { text-wrap: balance; }
+.arch-block h3 { word-break: keep-all; line-break: strict; }
 p, li, figcaption { text-wrap: pretty; }
 main { overflow-x: clip; }
 section { padding: 104px 0 24px; }
 .section-head { position: relative; max-width: 640px; margin-bottom: 44px; }
 .section-head::before { content: ""; position: absolute; inset: -14px -30px -10px -30px; z-index: -1; pointer-events: none; border-radius: 28px; background: rgba(4, 7, 13, .72); box-shadow: 0 0 40px 30px rgba(4, 7, 13, .72); }
 body[data-scene="forest"] .section-head::before { background: rgba(6, 12, 7, .86); box-shadow: 0 0 40px 30px rgba(6, 12, 7, .86); }
-.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font: 600 12.5px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
+.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; font: 600 12.5px var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
 .eyebrow::after { content: ""; flex: 0 0 56px; height: 1px; background: linear-gradient(90deg, var(--accent-2), transparent); }
 h2 { margin: 0 0 12px; font-size: clamp(26px, 4vw, 42px); line-height: 1.2; letter-spacing: -.015em; font-weight: 720; text-shadow: 0 2px 24px rgba(0, 0, 0, .5); }
 h2 [lang="en"] { display: block; margin-top: 4px; font: 500 .45em var(--mono); letter-spacing: .04em; color: #d6deed; text-shadow: 0 1px 14px rgba(0, 0, 0, .7); }
@@ -204,9 +205,10 @@ details[open] summary::before { transform: rotate(45deg); }
 details[open] summary { border-bottom: 1px solid var(--line); }
 .run { padding: 8px 20px 20px; }
 .run p { color: var(--muted); font-size: 14px; margin: 14px 0 8px; }
-pre { position: relative; margin: 12px 0; background: #060913; border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: 12px; padding: 18px 18px 18px 20px; overflow-x: auto; font-size: 13px; line-height: 1.7; color: #dbe4f5; }
+pre { position: relative; margin: 0; background: #060913; border: 1px solid var(--line); border-left: 2px solid var(--accent); border-radius: 12px; padding: 46px 18px 18px 20px; overflow-x: auto; font-size: 13px; line-height: 1.7; color: #dbe4f5; }
 :not(pre) > code { font-size: .9em; color: #e9d9b8; background: rgba(255, 255, 255, .06); border-radius: 5px; padding: 1px 6px; }
-.copy { position: absolute; top: 10px; right: 10px; min-height: 32px; padding: 0 12px; font: 600 12px var(--sans); border-radius: 999px; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .06); color: var(--text); cursor: pointer; transition: background .25s, border-color .25s, color .25s, transform .15s; }
+.codebox { position: relative; margin: 12px 0; }
+.copy { position: absolute; z-index: 1; top: 10px; right: 10px; min-height: 32px; padding: 0 12px; font: 600 12px var(--sans); border-radius: 999px; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .06); color: var(--text); cursor: pointer; transition: background .25s, border-color .25s, color .25s, transform .15s; }
 .copy:hover { border-color: var(--accent-2); background: rgba(255, 255, 255, .1); }
 .copy:active { transform: scale(.95); }
 .copy.done { color: #0b140b; background: var(--accent-2); border-color: transparent; }
