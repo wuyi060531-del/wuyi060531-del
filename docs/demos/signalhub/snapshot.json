@@ -1,0 +1,654 @@
+{
+  "sourceCommit": "5e3685912198fb5a4c5dc85eec59642d49690155",
+  "engine": "Java 21 / Python 3.12 / PostgreSQL 17",
+  "imports": [
+    {
+      "inserted": 1,
+      "deduplicated": 0,
+      "updated": 0
+    },
+    {
+      "inserted": 0,
+      "deduplicated": 1,
+      "updated": 0
+    },
+    {
+      "inserted": 0,
+      "deduplicated": 0,
+      "updated": 1
+    }
+  ],
+  "stages": [
+    {
+      "title": "[合成演示] 数据工程实习",
+      "company": "示例数据工坊（虚构）",
+      "city": "上海",
+      "categories": [
+        "data_engineering"
+      ],
+      "body": "Bachelor's degree required. Required: Python and SQL.",
+      "score": 92.5,
+      "hardStatus": "insufficient_information",
+      "matchingStatus": "current",
+      "breakdown": [
+        {
+          "key": "role",
+          "label": "岗位方向",
+          "ratio": 1.0,
+          "reason": "标题或明确个人职责符合目标方向：[data_engineering]",
+          "status": "confirmed",
+          "maximum": 30.0,
+          "evidence": [
+            "[合成演示] 数据工程实习"
+          ],
+          "contribution": 30.0,
+          "requestedWeight": 30.0
+        },
+        {
+          "key": "skills",
+          "label": "技能条件",
+          "ratio": 1.0,
+          "reason": "必备/历史条件权重1，加分条件0.5；任选组按达到数量比例，提及及否定条件不计分",
+          "status": "confirmed",
+          "maximum": 40.0,
+          "evidence": [
+            "Required: Python and SQL."
+          ],
+          "contribution": 40.0,
+          "requestedWeight": 40.0
+        },
+        {
+          "key": "city",
+          "label": "城市偏好",
+          "ratio": 1.0,
+          "reason": "符合目标城市偏好：[上海]",
+          "status": "confirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 15.0,
+          "requestedWeight": 15.0
+        },
+        {
+          "key": "company",
+          "label": "企业偏好",
+          "ratio": 0.0,
+          "reason": "企业性质未核验或未设置偏好，不计企业分",
+          "status": "unconfirmed",
+          "maximum": 0.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 0.0
+        },
+        {
+          "key": "qualifications",
+          "label": "招聘资格",
+          "ratio": 0.5,
+          "reason": "仅已确认符合项计分，未知项保留在分母；明确冲突会将最终分数降为0",
+          "status": "unconfirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 7.5,
+          "requestedWeight": 15.0
+        }
+      ],
+      "adjustments": [],
+      "qualifications": [
+        {
+          "key": "employment_type",
+          "label": "招聘类型",
+          "reason": "招聘类型符合档案",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "internship",
+          "profileValue": [
+            "internship"
+          ]
+        },
+        {
+          "key": "education",
+          "label": "最低学历",
+          "reason": "满足已知最低学历",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "bachelor",
+          "profileValue": "bachelor"
+        },
+        {
+          "key": "graduation",
+          "label": "招聘届别",
+          "reason": "招聘届别或预计毕业年份未知",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": [],
+          "profileValue": 2028
+        },
+        {
+          "key": "internship_start",
+          "label": "期望实习开始窗口",
+          "reason": "官方到岗日期未知；发布日期、招聘届别和全年招聘不等于可于期望时间入职",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": null,
+          "profileValue": [
+            "2027-03-01",
+            "2027-05-31"
+          ]
+        }
+      ],
+      "versions": [
+        1
+      ]
+    },
+    {
+      "title": "[合成演示] 数据工程实习",
+      "company": "示例数据工坊（虚构）",
+      "city": "上海",
+      "categories": [
+        "data_engineering"
+      ],
+      "body": "Bachelor's degree required. Required: Python and SQL. Preferred: Spark.",
+      "score": null,
+      "hardStatus": null,
+      "matchingStatus": "pending",
+      "breakdown": [],
+      "adjustments": [],
+      "qualifications": [],
+      "versions": [
+        2,
+        1
+      ]
+    },
+    {
+      "title": "[合成演示] 数据工程实习",
+      "company": "示例数据工坊（虚构）",
+      "city": "上海",
+      "categories": [
+        "data_engineering"
+      ],
+      "body": "Bachelor's degree required. Required: Python and SQL. Preferred: Spark.",
+      "score": 84.5,
+      "hardStatus": "insufficient_information",
+      "matchingStatus": "current",
+      "breakdown": [
+        {
+          "key": "role",
+          "label": "岗位方向",
+          "ratio": 1.0,
+          "reason": "标题或明确个人职责符合目标方向：[data_engineering]",
+          "status": "confirmed",
+          "maximum": 30.0,
+          "evidence": [
+            "[合成演示] 数据工程实习"
+          ],
+          "contribution": 30.0,
+          "requestedWeight": 30.0
+        },
+        {
+          "key": "skills",
+          "label": "技能条件",
+          "ratio": 0.8,
+          "reason": "必备/历史条件权重1，加分条件0.5；任选组按达到数量比例，提及及否定条件不计分",
+          "status": "partial",
+          "maximum": 40.0,
+          "evidence": [
+            "Required: Python and SQL.",
+            "Preferred: Spark."
+          ],
+          "contribution": 32.0,
+          "requestedWeight": 40.0
+        },
+        {
+          "key": "city",
+          "label": "城市偏好",
+          "ratio": 1.0,
+          "reason": "符合目标城市偏好：[上海]",
+          "status": "confirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 15.0,
+          "requestedWeight": 15.0
+        },
+        {
+          "key": "company",
+          "label": "企业偏好",
+          "ratio": 0.0,
+          "reason": "企业性质未核验或未设置偏好，不计企业分",
+          "status": "unconfirmed",
+          "maximum": 0.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 0.0
+        },
+        {
+          "key": "qualifications",
+          "label": "招聘资格",
+          "ratio": 0.5,
+          "reason": "仅已确认符合项计分，未知项保留在分母；明确冲突会将最终分数降为0",
+          "status": "unconfirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 7.5,
+          "requestedWeight": 15.0
+        }
+      ],
+      "adjustments": [],
+      "qualifications": [
+        {
+          "key": "employment_type",
+          "label": "招聘类型",
+          "reason": "招聘类型符合档案",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "internship",
+          "profileValue": [
+            "internship"
+          ]
+        },
+        {
+          "key": "education",
+          "label": "最低学历",
+          "reason": "满足已知最低学历",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "bachelor",
+          "profileValue": "bachelor"
+        },
+        {
+          "key": "graduation",
+          "label": "招聘届别",
+          "reason": "招聘届别或预计毕业年份未知",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": [],
+          "profileValue": 2028
+        },
+        {
+          "key": "internship_start",
+          "label": "期望实习开始窗口",
+          "reason": "官方到岗日期未知；发布日期、招聘届别和全年招聘不等于可于期望时间入职",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": null,
+          "profileValue": [
+            "2027-03-01",
+            "2027-05-31"
+          ]
+        }
+      ],
+      "versions": [
+        2,
+        1
+      ]
+    }
+  ],
+  "items": [
+    {
+      "title": "[合成演示] 数据工程实习",
+      "company": "示例数据工坊（虚构）",
+      "city": "上海",
+      "categories": [
+        "data_engineering"
+      ],
+      "body": "Bachelor's degree required. Required: Python and SQL. Preferred: Spark.",
+      "score": 84.5,
+      "hardStatus": "insufficient_information",
+      "matchingStatus": "current",
+      "breakdown": [
+        {
+          "key": "role",
+          "label": "岗位方向",
+          "ratio": 1.0,
+          "reason": "标题或明确个人职责符合目标方向：[data_engineering]",
+          "status": "confirmed",
+          "maximum": 30.0,
+          "evidence": [
+            "[合成演示] 数据工程实习"
+          ],
+          "contribution": 30.0,
+          "requestedWeight": 30.0
+        },
+        {
+          "key": "skills",
+          "label": "技能条件",
+          "ratio": 0.8,
+          "reason": "必备/历史条件权重1，加分条件0.5；任选组按达到数量比例，提及及否定条件不计分",
+          "status": "partial",
+          "maximum": 40.0,
+          "evidence": [
+            "Required: Python and SQL.",
+            "Preferred: Spark."
+          ],
+          "contribution": 32.0,
+          "requestedWeight": 40.0
+        },
+        {
+          "key": "city",
+          "label": "城市偏好",
+          "ratio": 1.0,
+          "reason": "符合目标城市偏好：[上海]",
+          "status": "confirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 15.0,
+          "requestedWeight": 15.0
+        },
+        {
+          "key": "company",
+          "label": "企业偏好",
+          "ratio": 0.0,
+          "reason": "企业性质未核验或未设置偏好，不计企业分",
+          "status": "unconfirmed",
+          "maximum": 0.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 0.0
+        },
+        {
+          "key": "qualifications",
+          "label": "招聘资格",
+          "ratio": 0.5,
+          "reason": "仅已确认符合项计分，未知项保留在分母；明确冲突会将最终分数降为0",
+          "status": "unconfirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 7.5,
+          "requestedWeight": 15.0
+        }
+      ],
+      "adjustments": [],
+      "qualifications": [
+        {
+          "key": "employment_type",
+          "label": "招聘类型",
+          "reason": "招聘类型符合档案",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "internship",
+          "profileValue": [
+            "internship"
+          ]
+        },
+        {
+          "key": "education",
+          "label": "最低学历",
+          "reason": "满足已知最低学历",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "bachelor",
+          "profileValue": "bachelor"
+        },
+        {
+          "key": "graduation",
+          "label": "招聘届别",
+          "reason": "招聘届别或预计毕业年份未知",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": [],
+          "profileValue": 2028
+        },
+        {
+          "key": "internship_start",
+          "label": "期望实习开始窗口",
+          "reason": "官方到岗日期未知；发布日期、招聘届别和全年招聘不等于可于期望时间入职",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": null,
+          "profileValue": [
+            "2027-03-01",
+            "2027-05-31"
+          ]
+        }
+      ],
+      "versions": [
+        2,
+        1
+      ]
+    },
+    {
+      "title": "[合成演示] 批处理数据开发实习",
+      "company": "示例工程工坊（虚构）",
+      "city": "成都",
+      "categories": [
+        "data_engineering"
+      ],
+      "body": "Bachelor's degree required. Required: Python and SQL.",
+      "score": 77.5,
+      "hardStatus": "insufficient_information",
+      "matchingStatus": "current",
+      "breakdown": [
+        {
+          "key": "role",
+          "label": "岗位方向",
+          "ratio": 1.0,
+          "reason": "标题或明确个人职责符合目标方向：[data_engineering]",
+          "status": "confirmed",
+          "maximum": 30.0,
+          "evidence": [
+            "[合成演示] 批处理数据开发实习"
+          ],
+          "contribution": 30.0,
+          "requestedWeight": 30.0
+        },
+        {
+          "key": "skills",
+          "label": "技能条件",
+          "ratio": 1.0,
+          "reason": "必备/历史条件权重1，加分条件0.5；任选组按达到数量比例，提及及否定条件不计分",
+          "status": "confirmed",
+          "maximum": 40.0,
+          "evidence": [
+            "Required: Python and SQL."
+          ],
+          "contribution": 40.0,
+          "requestedWeight": 40.0
+        },
+        {
+          "key": "city",
+          "label": "城市偏好",
+          "ratio": 0.0,
+          "reason": "已知工作地点与目标城市不同",
+          "status": "unmatched",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 15.0
+        },
+        {
+          "key": "company",
+          "label": "企业偏好",
+          "ratio": 0.0,
+          "reason": "企业性质未核验或未设置偏好，不计企业分",
+          "status": "unconfirmed",
+          "maximum": 0.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 0.0
+        },
+        {
+          "key": "qualifications",
+          "label": "招聘资格",
+          "ratio": 0.5,
+          "reason": "仅已确认符合项计分，未知项保留在分母；明确冲突会将最终分数降为0",
+          "status": "unconfirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 7.5,
+          "requestedWeight": 15.0
+        }
+      ],
+      "adjustments": [],
+      "qualifications": [
+        {
+          "key": "employment_type",
+          "label": "招聘类型",
+          "reason": "招聘类型符合档案",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "internship",
+          "profileValue": [
+            "internship"
+          ]
+        },
+        {
+          "key": "education",
+          "label": "最低学历",
+          "reason": "满足已知最低学历",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "bachelor",
+          "profileValue": "bachelor"
+        },
+        {
+          "key": "graduation",
+          "label": "招聘届别",
+          "reason": "招聘届别或预计毕业年份未知",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": [],
+          "profileValue": 2028
+        },
+        {
+          "key": "internship_start",
+          "label": "期望实习开始窗口",
+          "reason": "官方到岗日期未知；发布日期、招聘届别和全年招聘不等于可于期望时间入职",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": null,
+          "profileValue": [
+            "2027-03-01",
+            "2027-05-31"
+          ]
+        }
+      ],
+      "versions": [
+        1
+      ]
+    },
+    {
+      "title": "[合成演示] Java 后端实习",
+      "company": "示例工程工坊（虚构）",
+      "city": "上海",
+      "categories": [
+        "backend"
+      ],
+      "body": "Bachelor's degree required. Required: Java and SQL.",
+      "score": 10,
+      "hardStatus": "insufficient_information",
+      "matchingStatus": "current",
+      "breakdown": [
+        {
+          "key": "role",
+          "label": "岗位方向",
+          "ratio": 0.0,
+          "reason": "岗位方向与目标不符，不能用地点或公司偏好补成高推荐",
+          "status": "unmatched",
+          "maximum": 30.0,
+          "evidence": [
+            "[合成演示] Java 后端实习"
+          ],
+          "contribution": 0.0,
+          "requestedWeight": 30.0
+        },
+        {
+          "key": "skills",
+          "label": "技能条件",
+          "ratio": 0.5,
+          "reason": "必备/历史条件权重1，加分条件0.5；任选组按达到数量比例，提及及否定条件不计分",
+          "status": "partial",
+          "maximum": 40.0,
+          "evidence": [
+            "Required: Java and SQL."
+          ],
+          "contribution": 20.0,
+          "requestedWeight": 40.0
+        },
+        {
+          "key": "city",
+          "label": "城市偏好",
+          "ratio": 1.0,
+          "reason": "符合目标城市偏好：[上海]",
+          "status": "confirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 15.0,
+          "requestedWeight": 15.0
+        },
+        {
+          "key": "company",
+          "label": "企业偏好",
+          "ratio": 0.0,
+          "reason": "企业性质未核验或未设置偏好，不计企业分",
+          "status": "unconfirmed",
+          "maximum": 0.0,
+          "evidence": [],
+          "contribution": 0.0,
+          "requestedWeight": 0.0
+        },
+        {
+          "key": "qualifications",
+          "label": "招聘资格",
+          "ratio": 0.5,
+          "reason": "仅已确认符合项计分，未知项保留在分母；明确冲突会将最终分数降为0",
+          "status": "unconfirmed",
+          "maximum": 15.0,
+          "evidence": [],
+          "contribution": 7.5,
+          "requestedWeight": 15.0
+        }
+      ],
+      "adjustments": [
+        {
+          "code": "direction_conflict",
+          "delta": -32.5,
+          "reason": "目标方向不符，推荐分上限10"
+        }
+      ],
+      "qualifications": [
+        {
+          "key": "employment_type",
+          "label": "招聘类型",
+          "reason": "招聘类型符合档案",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "internship",
+          "profileValue": [
+            "internship"
+          ]
+        },
+        {
+          "key": "education",
+          "label": "最低学历",
+          "reason": "满足已知最低学历",
+          "status": "confirmed",
+          "evidence": null,
+          "sourceValue": "bachelor",
+          "profileValue": "bachelor"
+        },
+        {
+          "key": "graduation",
+          "label": "招聘届别",
+          "reason": "招聘届别或预计毕业年份未知",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": [],
+          "profileValue": 2028
+        },
+        {
+          "key": "internship_start",
+          "label": "期望实习开始窗口",
+          "reason": "官方到岗日期未知；发布日期、招聘届别和全年招聘不等于可于期望时间入职",
+          "status": "unconfirmed",
+          "evidence": null,
+          "sourceValue": null,
+          "profileValue": [
+            "2027-03-01",
+            "2027-05-31"
+          ]
+        }
+      ],
+      "versions": [
+        1
+      ]
+    }
+  ]
+}

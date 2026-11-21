@@ -61,3 +61,29 @@ Screenshots are stored as WebP (at most 1600 px wide); the SHA-256 is of the sto
 - **Subjective motion quality** of the V2 effects (particles, magnetic buttons, tilt, sparks): verified only that they run, update the expected variables and raise no errors; feel and smoothness on real hardware are for the reviewer to judge. Mouse-only effects are not exercised on touch.
 - Console warnings: headless Chromium logs `GPU stall due to ReadPixels` performance warnings from its software GL path; the page never calls `readPixels`.
 - Pages deployment itself (not enabled by this change; `docs/README.md` lists the steps).
+
+## Project integration checks (2026-11-21)
+
+Ran Google Chrome 157 in a disposable headless profile with SwiftShader. The site was served from
+the local `/wuyi060531-del/` path used by GitHub Pages. [Browser results](portfolio-integration.json)
+and `scripts/check_demo_browser.py` record the run. The active-scene check uses the existing low-quality
+debug settings and disables the speed watchdog for that check, so software rendering can draw both scenes.
+
+| Check | Observed result |
+|---|---|
+| Temple Night and Moss Forest | Both drew real WebGL frames. Switching and pointer response worked. Draw counts stopped while paused and Play resumed. |
+| Fallback | The hero remained readable with WebGL forcibly unavailable. Reduced motion requested no scene bundles. The 320 and 390 px homepages stayed in poster mode. |
+| 320, 390 and 1440 px across three demos | No page-wide horizontal overflow, no WebGL canvas, and return links worked. |
+| Order pipeline | Browser switched transaction steps. The original PR snapshot passed `python -m scripts.build_demo_data --check` and its targeted pytest (1 passed). The independent main-branch `python -m scripts.demo_sqlite` accepted 26 of 30 inputs, isolated 3, discarded 1 duplicate, reconciled 66.00 paid and wrote zero rows on replay. |
+| DataGuard | The browser replayed the success report, two duplicate-rule issues, the warning-only case and the empty-file failure. Isolated Java/H2 HTTP capture measured 29 valid / 11 invalid / 11 issues out of 40 with a 72.50% score. Empty input returned `FAILED / EMPTY_FILE` and the report route returned HTTP 409. |
+| SignalHub | The browser replayed score invalidation and recomputation, city and role combinations and no-match search. The isolated Java/Python/PostgreSQL 17 run produced one insert, one deduplicated replay and one update. The stages returned 92.5, null and 84.5. The supplemental Worker imports yielded 3 synthetic catalog records; the default API listing yielded 0. The upstream `public_demo.py --verify-only` also passed separately on a fresh temporary database. |
+| Privacy and references | Zero third-party requests or uncaught page errors in the browser run. Version-specific source, upstream PRs and CI references were checked with the GitHub connector. Direct external HTTPS from the local environment timed out. |
+| Local resource observation | With cache disabled and reduced motion, the resource entries (excluding the HTML document) were 401,671 bytes across 10 requests on baseline `96046c6` and 237,240 bytes across 7 in this run. Neither loaded a scene bundle. The load times in the JSON varied across local runs and are not a latency benchmark. |
+| Scope of local verification | Used the pinned synthetic workflow and the targeted order snapshot test. Did not rerun the complete upstream suites or MySQL integrations for this portfolio change. Safari, physical mobile hardware, GPU memory, battery and deployed GitHub Pages remain unverified. |
+
+| File | What it shows | Size | KB | SHA-256 |
+|---|---|---|---|---|
+| `integration-temple.webp` | Live Temple Night from the integrated homepage | 1440x900 | 307 | `969cf3f740c302d6f8073c0c1551cc4a9d385aa960bf9db9250143417be69fe7` |
+| `integration-forest.webp` | Live Moss Forest after switching from Temple Night | 1440x900 | 76 | `7f3faa107a277f1eab9f8dec9da93273ea6bf030e1205c405429adb8cc94d586` |
+| `integration-dataguard.webp` | Real H2 report replay for the 40-row synthetic CSV | 1440x900 | 42 | `bf9466b835f0be8e2dc61cdc291209867be0e3b14c269c3d64ed0f74ac475fba` |
+| `integration-signalhub.webp` | Version 2 with 84.5 after recomputation | 1440x900 | 42 | `3b5245173f1df6485c4a26c353fff58a11fa2558d5e8b5ce022cefb48248961f` |

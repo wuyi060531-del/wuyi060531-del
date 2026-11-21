@@ -1,0 +1,2 @@
+order_id,customer_id,product_id,quantity,unit_price,order_time,status
+SYN-RANGE,SYN-C,SYN-P,100,10000,2026-10-19T09:00:00,PAID
