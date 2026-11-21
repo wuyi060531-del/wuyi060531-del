@@ -1,0 +1,36 @@
+{
+  "baselineReduced": {
+    "htmlBytes": 19740,
+    "assetBytes": 401671,
+    "requests": 10,
+    "loadMs": 854,
+    "stageBundle": false
+  },
+  "currentReduced": {
+    "htmlBytes": 20907,
+    "assetBytes": 237240,
+    "requests": 7,
+    "loadMs": 21,
+    "stageBundle": false
+  },
+  "scenes": {
+    "temple": true,
+    "forest": true,
+    "pauseResume": true,
+    "pointer": true
+  },
+  "mobilePosterWidths": [
+    320,
+    390
+  ],
+  "webglUnavailableReadable": true,
+  "demoWidths": [
+    320,
+    390,
+    1440
+  ],
+  "projectViews": 3,
+  "nonLoopbackRequests": [],
+  "browserErrors": [],
+  "browser": "Chrome/157.0.8103.80"
+}

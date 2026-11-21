@@ -72,7 +72,7 @@
       <div class="section-head reveal">
         <p class="eyebrow">01 · Projects</p>
         <h2 id="projects-title">项目 <span lang="en">Projects</span></h2>
-        <p>三个项目都是本机单用户、只用合成数据。想看 Java 后端先看 DataGuard，数据开发先看 E-Commerce Order Pipeline，AI 应用 / 全栈先看 SignalHub。</p>
+        <p>这里展示的三个项目都以合成数据验收。想看 Java 后端先看 DataGuard，数据开发先看 E-Commerce Order Pipeline，AI 应用 / 全栈先看 SignalHub。</p>
       </div>
 
       <article class="project signalhub glow reveal" id="p-signalhub-card" data-scene="forest" aria-labelledby="p-signalhub">
@@ -89,6 +89,7 @@
           <ul class="chips" aria-label="技术栈"><li>Java 21</li><li>Spring Boot 4.1</li><li>Python 3.12 Worker</li><li>PostgreSQL 17</li><li>Flyway V1–V12</li><li>Docker Compose</li></ul>
           <p class="limit"><strong>限制：</strong>仅本机单用户、无认证；连续 72 小时稳定性运行尚未完成；演示数据是合成的。</p>
           <div class="links">
+            <a class="btn sm" href="demos/signalhub/index.html">打开静态演示 Open demo</a>
             <a class="btn sm" href="https://github.com/wuyi060531-del/signalhub">源码 Source</a>
             <a class="btn sm" href="https://github.com/wuyi060531-del/signalhub/blob/main/docs/PUBLIC_DEMO.md">合成演示步骤</a>
           </div>
@@ -113,6 +114,7 @@
           <ul class="chips" aria-label="技术栈"><li>Java 21</li><li>Spring Boot</li><li>JDBC</li><li>H2 / MySQL</li><li>HTML / CSS / JS</li><li>Docker</li></ul>
           <p class="limit"><strong>限制：</strong>仅本机单用户；断电恢复和备份恢复没有验证过。</p>
           <div class="links">
+            <a class="btn sm" href="demos/dataguard/index.html">打开静态演示 Open demo</a>
             <a class="btn sm" href="https://github.com/wuyi060531-del/dataguard">源码 Source</a>
             <a class="btn sm" href="https://github.com/wuyi060531-del/dataguard/blob/main/docs/VALIDATION.md">验收记录</a>
           </div>
@@ -214,37 +216,48 @@
       <div class="section-head reveal">
         <p class="eyebrow">04 · Run it</p>
         <h2 id="repro-title">自己跑一遍 <span lang="en">Run it yourself</span></h2>
-        <p>命令直接取自各仓库 README。最快的是订单管道（只需 Python，不需要数据库或 Docker）。</p>
+        <p>下面的命令固定源码版本并使用隔离的合成数据。最快的是订单管道，只需 Python。</p>
       </div>
 
       <details class="glow reveal" open>
-        <summary>E-Commerce Order Pipeline · Python 3.12，最快</summary>
+        <summary id="run-order">E-Commerce Order Pipeline · Python 3.12，最快</summary>
         <div class="run">
-<pre><code>python3.12 -m venv .venv
+<pre><code>git clone https://github.com/wuyi060531-del/ecommerce-order-pipeline.git
+cd ecommerce-order-pipeline
+git checkout --detach 493ed0f7c44fd4bdd6b77ecf42802a983fad8297
+python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt -c constraints-demo-py312.txt
 .venv/bin/python -m scripts.demo_sqlite</code></pre>
-          <p>成功时最后一行是：<code>演示通过：30 = 26 + 3 + 1；paid 66.00 元；重跑、SQL、输入保护一致。</code></p>
+          <p>成功时最后一行是：<code>演示通过：30 = 26 + 3 + 1；paid 66.00 元；重跑、SQL、输入保护一致。</code> 此命令运行后自行退出；再次执行时会创建新的 SQLite 演示库。</p>
         </div>
       </details>
 
       <details class="glow reveal">
-        <summary>DataGuard · JDK 21、Bash、curl 或 wget、unzip</summary>
+        <summary id="run-dataguard">DataGuard · JDK 21、Bash、curl 或 wget、unzip</summary>
         <div class="run">
-<pre><code>bash scripts/mvn.sh clean verify
-bash scripts/run.sh</code></pre>
-          <p>打开 <code>http://127.0.0.1:8080</code>，点“导入模拟订单”，再点“开始检测”。默认用 H2 文件库，不需要 MySQL。预期：29 条正常、11 条异常、11 个问题，质量分 72.50%。</p>
+<pre><code>git clone https://github.com/wuyi060531-del/dataguard.git
+cd dataguard
+git checkout --detach bcbabb0e9b4fca7cd26d3234e640d3f7a4a08cb3
+bash scripts/mvn.sh -DskipTests package
+run_dir=$(mktemp -d)
+PORT=18094 DATAGUARD_DB_PATH="$run_dir/orders" DATAGUARD_STORAGE_ROOT="$run_dir/uploads" \
+  java -jar target/dataguard-1.1.0.jar</code></pre>
+          <p>打开 <code>http://127.0.0.1:18094</code>，导入模拟订单并开始检测。H2 实测 29 条正常、11 条异常、11 个问题，质量分 72.50%。用 Ctrl+C 停止；重置演示时重新执行最后两条命令，换一个临时目录。</p>
         </div>
       </details>
 
       <details class="glow reveal">
-        <summary>SignalHub · Python 3.12、JDK 21、Maven 3.9、PostgreSQL 17</summary>
+        <summary id="run-signalhub">SignalHub · Python 3.12、JDK 21、Maven 3.9、PostgreSQL 17</summary>
         <div class="run">
-<pre><code>python3.12 -m venv .venv
+<pre><code>git clone https://github.com/wuyi060531-del/signalhub.git
+cd signalhub
+git checkout --detach 5e3685912198fb5a4c5dc85eec59642d49690155
+python3.12 -m venv .venv
 .venv/bin/python -m pip install --upgrade 'pip>=26.2'
 .venv/bin/python -m pip install -e 'data-pipeline-python[test]'
 ./scripts/mvn.sh -f backend-java/pom.xml -DskipTests package
 .venv/bin/python scripts/public_demo.py</code></pre>
-          <p>按终端打印的地址打开岗位详情。演示会新建临时数据库，里面只有虚构的 JD 和档案，运行时不访问外部招聘、AI 或翻译服务。</p>
+          <p>按终端打印的地址打开岗位详情。演示会新建临时数据库，里面只有虚构的 JD 和档案，运行时不访问外部招聘、AI 或翻译服务。Ctrl+C 停止并清理临时库；再次运行即可重置。可加 <code>--verify-only</code> 验证后自动退出。PostgreSQL 17 的 <code>initdb</code> 和 <code>pg_ctl</code> 须在 PATH 中，或用 <code>PG_BIN</code> 指向其目录。</p>
         </div>
       </details>
     </div>

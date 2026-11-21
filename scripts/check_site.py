@@ -18,7 +18,7 @@ DOCS = ROOT / "docs"
 MANIFEST = ROOT / "scripts" / "site-manifest.json"
 MAX_FILE = 1_500_000          # bytes, per file
 MAX_TOTAL = 8_000_000         # bytes, whole site
-OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js", "ui.js"]          # hand-written; the bundle is third-party
+OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js", "ui.js", "project-demo.js", "demo.js"]
 LINK_ALLOW = ("https://github.com/wuyi060531-del", "https://github.com/MengTo/threeui")
 EMAIL_ALLOW = re.compile(r"@users\.noreply\.github\.com$|^noreply@")
 errors: list[str] = []
@@ -75,7 +75,7 @@ def check_html() -> dict[Path, Page]:
             elif u.scheme in ("http", "https"):
                 if tag != "a":
                     err(f"{rel}: external <{tag} {key}> {ref} (assets must be local)")
-                elif not ref.startswith(LINK_ALLOW):
+                elif not any(ref == prefix or ref.startswith((prefix + "/", prefix + "#")) for prefix in LINK_ALLOW):
                     err(f"{rel}: link to non-allow-listed host {ref}")
             elif ref.startswith("/"):
                 err(f"{rel}: root-absolute path {ref!r} breaks under /<repo>/ (use a relative path)")
@@ -113,7 +113,7 @@ def check_js() -> None:
     node = shutil.which("node")
     if not node:
         print("WARN node not found: skipping JavaScript syntax check")
-    for js in sorted((DOCS / "assets").glob("*.js")):
+    for js in sorted(DOCS.rglob("*.js")):
         rel = js.relative_to(DOCS)
         text = js.read_text(encoding="utf-8")
         for m in re.finditer(r"""(?:from\s*|import\s*\(\s*|import\s+)['"](\.{1,2}/[^'"]+)['"]""", text):
@@ -195,6 +195,38 @@ def check_required(pages) -> None:
         err("demo mirror: SOURCE.md must record the source commit")
 
 
+def check_project_snapshots() -> None:
+    try:
+        base = DOCS / "demos"
+        guard = json.loads((base / "dataguard/snapshot.json").read_text(encoding="utf-8"))
+        hub = json.loads((base / "signalhub/snapshot.json").read_text(encoding="utf-8"))
+        for slug, snapshot in (("dataguard", guard), ("signalhub", hub)):
+            folder = base / slug
+            page = (folder / "index.html").read_text(encoding="utf-8")
+            commit = snapshot["sourceCommit"]
+            if not re.fullmatch("[0-9a-f]{40}", commit) or f"/commit/{commit}" not in page:
+                err(f"{slug}: page and replay must reference the same upstream commit")
+            if "<canvas" in page or "assets/main.js" in page:
+                err(f"{slug}: project pages must not load the 3D stage")
+        for name, item in guard["cases"].items():
+            if not (base / "dataguard" / (name + ".csv")).is_file():
+                err(f"dataguard: missing input for {name}")
+            report = item.get("report")
+            if report is not None and (report["totalRecords"] != report["validRecords"] + report["invalidRecords"]
+                                       or report["totalIssues"] != len(report["issues"])):
+                err(f"dataguard: counts disagree for {name}")
+        if guard["cases"]["empty"]["reportHttpStatus"] != 409:
+            err("dataguard: failed task must retain the report's recorded HTTP 409")
+        if [row["score"] for row in hub["stages"]] != [92.5, None, 84.5]:
+            err("signalhub: unexpected baseline, invalidation or recomputed score")
+        if hub["imports"][1] != {"inserted": 0, "deduplicated": 1, "updated": 0}:
+            err("signalhub: original replay did not deduplicate")
+        if len(hub["items"]) < 2 or not all(row["title"].startswith("[合成演示]") for row in hub["items"]):
+            err("signalhub: browseable catalog must contain only labeled synthetic records")
+    except (AttributeError, KeyError, OSError, TypeError, ValueError) as failure:
+        err(f"project snapshots: {failure}")
+
+
 def check_privacy() -> None:
     patterns = {
         "email": re.compile(r"[\w.+-]+@[\w-]+\.[A-Za-z][\w.-]*"),
@@ -207,6 +239,9 @@ def check_privacy() -> None:
         if p.suffix in skip or p.name == "temple-night.js":
             continue
         text = p.read_text(encoding="utf-8", errors="replace")
+        # The public GitHub Actions run ID is a numeric identifier, not contact data.
+        text = re.sub(r'https://github\.com/wuyi060531-del/(?:dataguard|signalhub)/actions/runs/[0-9]+(?=["\s<)])',
+                      '', text)
         for label, rx in patterns.items():
             for m in rx.finditer(text):
                 if label == "email" and EMAIL_ALLOW.search(m.group(0)):
@@ -221,6 +256,7 @@ def main() -> int:
     check_js()
     check_evidence()
     check_required(pages)
+    check_project_snapshots()
     check_privacy()
     check_integrity(update)
     if update and not errors:
