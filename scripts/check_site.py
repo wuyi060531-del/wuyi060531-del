@@ -191,13 +191,19 @@ def check_required(pages) -> None:
         if needle not in notices:
             err(f"THIRD_PARTY_NOTICES.md must contain {needle!r}")
     src = DOCS / "demos" / "ecommerce-order-pipeline" / "SOURCE.md"
-    if not src.exists() or not re.search(r"commit `[0-9a-f]{7,40}`", src.read_text(encoding="utf-8")):
+    if not src.exists() or not re.search(r"commit `[0-9a-f]{40}`", src.read_text(encoding="utf-8")):
         err("demo mirror: SOURCE.md must record the source commit")
 
 
 def check_project_snapshots() -> None:
     try:
         base = DOCS / "demos"
+        home = (DOCS / "index.html").read_text(encoding="utf-8")
+        order = base / "ecommerce-order-pipeline"
+        source = (order / "SOURCE.md").read_text(encoding="utf-8")
+        pinned_order = re.search(r"commit `([0-9a-f]{40})`", source)
+        if pinned_order and f"/tree/{pinned_order[1]}/docs/demo" not in (order / "index.html").read_text(encoding="utf-8"):
+            err("order demo: source link must match the documented mirror commit")
         guard = json.loads((base / "dataguard/snapshot.json").read_text(encoding="utf-8"))
         hub = json.loads((base / "signalhub/snapshot.json").read_text(encoding="utf-8"))
         for slug, snapshot in (("dataguard", guard), ("signalhub", hub)):
@@ -206,6 +212,8 @@ def check_project_snapshots() -> None:
             commit = snapshot["sourceCommit"]
             if not re.fullmatch("[0-9a-f]{40}", commit) or f"/commit/{commit}" not in page:
                 err(f"{slug}: page and replay must reference the same upstream commit")
+            if f"git checkout --detach {commit}" not in home:
+                err(f"{slug}: local run instructions must use the captured upstream commit")
             if "<canvas" in page or "assets/main.js" in page:
                 err(f"{slug}: project pages must not load the 3D stage")
         for name, item in guard["cases"].items():
