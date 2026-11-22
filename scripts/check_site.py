@@ -18,7 +18,7 @@ DOCS = ROOT / "docs"
 MANIFEST = ROOT / "scripts" / "site-manifest.json"
 MAX_FILE = 1_500_000          # bytes, per file
 MAX_TOTAL = 8_000_000         # bytes, whole site
-OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js", "ui.js", "project-demo.js", "demo.js"]
+OUR_JS = ["main.js", "stage.js", "fx.js", "forest.js", "ui.js", "project-demo.js", "demo.js", "language.js", "journey.js"]
 LINK_ALLOW = ("https://github.com/wuyi060531-del", "https://github.com/MengTo/threeui")
 EMAIL_ALLOW = re.compile(r"@users\.noreply\.github\.com$|^noreply@")
 errors: list[str] = []
@@ -39,10 +39,13 @@ def files() -> list[Path]:
 class Page(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.refs, self.ids, self.anchors = [], set(), []
+        self.refs, self.ids, self.locale_keys = [], set(), set()
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        for attr in ("data-i", "data-i-alt", "data-i-label", "data-title"):
+            if a.get(attr):
+                self.locale_keys.add(a[attr])
         if a.get("id"):
             self.ids.add(a["id"])
         for key in ("href", "src", "poster", "data-src"):
@@ -91,6 +94,22 @@ def check_html() -> dict[Path, Page]:
                 elif DOCS.resolve() not in target.parents and target != DOCS.resolve():
                     err(f"{rel}: {ref} escapes docs/")
     return pages
+
+
+def check_locale(pages: dict[Path, Page]) -> None:
+    dictionary = DOCS / "assets/english.json"
+    try:
+        messages = json.loads(dictionary.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as failure:
+        err(f"translation dictionary: {failure}")
+        return
+    if not isinstance(messages, dict) or any(not isinstance(value, str) or not value.strip() for value in messages.values()):
+        err("translation dictionary entries must be non-empty plain text")
+        return
+    for path, page in pages.items():
+        missing = sorted(page.locale_keys - messages.keys())
+        if missing:
+            err(f"{path.relative_to(DOCS)}: missing translations {missing}")
 
 
 def check_css() -> None:
@@ -260,6 +279,7 @@ def check_privacy() -> None:
 def main() -> int:
     update = "--update" in sys.argv
     pages = check_html()
+    check_locale(pages)
     check_css()
     check_js()
     check_evidence()

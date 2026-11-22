@@ -17,6 +17,7 @@ export function createStage({ lowPower, maxFps }) {
   let current = 'night';          // scene the page wants right now
   let fading = null;              // { name, until } scene that is fading out and still draws
   let playing = false, started = false, raf = 0, last = 0, lastNow = 0;
+  let playRequest = 0;
 
   const emit = () => listeners.forEach((fn) => fn({ scene: current, playing, failed: { ...failed } }));
 
@@ -99,9 +100,9 @@ export function createStage({ lowPower, maxFps }) {
     current = name;
     document.body.dataset.scene = name;
     fx.setKind(name);
-    if (started) {
+    if (playing) {
       const c = await ensure(name);
-      if (current !== name) return;                      // the visitor already moved on
+      if (!playing || current !== name) return;          // paused or moved on while loading
       if (c) { fading = { name: previous, until: performance.now() + 1100 }; paint(name); c.resize(); c.render(performance.now()); }
       else { fading = null; paint(null); }                // this scene is unavailable: show its still poster
     }
@@ -110,11 +111,15 @@ export function createStage({ lowPower, maxFps }) {
 
   async function play(force = false) {
     if (force) { forced = true; delete document.body.dataset.degraded; }
-    if (!started) {
-      started = true;
-      const c = await ensure(current);
-      if (c) { paint(current); c.render(performance.now()); }
-      else if (!failed.night || !failed.forest) { /* the other scene can still run */ }
+    const request = ++playRequest;
+    started = true;
+    const name = current;
+    const scene = await ensure(name);
+    if (request !== playRequest) return;
+    if (name !== current) return play();
+    if (scene) {
+      paint(name);
+      if (!document.hidden) scene.render(performance.now());
     }
     playing = true;
     document.body.dataset.playing = '1';
@@ -122,6 +127,7 @@ export function createStage({ lowPower, maxFps }) {
   }
 
   function pause() {
+    playRequest++;
     playing = false; wStart = 0;
     delete document.body.dataset.playing;
     if (raf) { cancelAnimationFrame(raf); raf = 0; }
@@ -131,7 +137,7 @@ export function createStage({ lowPower, maxFps }) {
   const onVis = () => (document.hidden ? (raf && (cancelAnimationFrame(raf), (raf = 0))) : kick());
   document.addEventListener('visibilitychange', onVis);
 
-  const onResize = () => { [current, fading && fading.name].forEach((n) => n && ctl[n] && ctl[n].resize()); fx.resize(); if (!playing) { fx.clear(); Object.entries(ctl).forEach(([n, c]) => c && n === current && c.render(performance.now())); } };
+  const onResize = () => { [current, fading && fading.name].forEach((n) => n && ctl[n] && ctl[n].resize()); fx.resize(); if (!playing) fx.clear(); };
   new ResizeObserver(onResize).observe(document.documentElement);
   fx.resize();
 

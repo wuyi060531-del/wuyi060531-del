@@ -53,6 +53,20 @@ export function initUI() {
     const glows = $$('.glow, .btn');
     const magnets = $$('.btn, .chip');
     const tilts = $$('.project');
+    const visible = new Set([...glows, ...magnets]);
+    if ('IntersectionObserver' in window) {
+      const near = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          const el = entry.target;
+          if (entry.isIntersecting) visible.add(el);
+          else {
+            visible.delete(el);
+            for (const property of ['--tx', '--ty', '--rx', '--ry']) el.style.removeProperty(property);
+          }
+        }
+      }, { rootMargin: '80px' });
+      visible.forEach((el) => near.observe(el));
+    }
     let px = 0, py = 0, queued = false;
 
     const frame = () => {
@@ -61,12 +75,14 @@ export function initUI() {
       root.style.setProperty('--py', ((py / window.innerHeight) * 2 - 1).toFixed(3));
       // read all rectangles first, then write, so the browser lays out once
       const rects = new Map();
-      for (const el of glows) {
+      for (const el of visible) {
         const r = el.getBoundingClientRect();
         if (r.bottom < -80 || r.top > window.innerHeight + 80) continue;
         rects.set(el, r);
       }
-      for (const [el, r] of rects) {
+      for (const el of glows) {
+        const r = rects.get(el);
+        if (!r) continue;
         const inside = px >= r.left && px <= r.right && py >= r.top && py <= r.bottom;
         if (inside) {
           el.style.setProperty('--gx', (((px - r.left) / r.width) * 100).toFixed(1) + '%');
@@ -76,7 +92,8 @@ export function initUI() {
         }
       }
       for (const el of magnets) {
-        const r = rects.get(el) || el.getBoundingClientRect();
+        const r = rects.get(el);
+        if (!r) continue;
         const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
         const dx = px - cx, dy = py - cy, reach = Math.max(r.width, 90) * 0.75 + 20;
         const d = Math.hypot(dx, dy);
@@ -98,15 +115,18 @@ export function initUI() {
       }
     };
     window.addEventListener('pointermove', (e) => {
+      if (reduce.matches || e.pointerType === 'touch') return;
       px = e.clientX; py = e.clientY;
       if (!queued) { queued = true; requestAnimationFrame(frame); }
     }, { passive: true });
-    window.addEventListener('pointerleave', () => {
+    const resetPointer = () => {
       px = window.innerWidth / 2; py = window.innerHeight / 2;
       magnets.forEach((el) => { el.style.setProperty('--tx', '0px'); el.style.setProperty('--ty', '0px'); });
       tilts.forEach((c) => { c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
       root.style.setProperty('--px', 0); root.style.setProperty('--py', 0);
-    });
+    };
+    window.addEventListener('pointerleave', resetPointer);
+    reduce.addEventListener('change', resetPointer);
   }
 
   /* ---- click sparks: one small 2D canvas, drawn only while sparks are alive ---- */
@@ -149,7 +169,7 @@ export function initUI() {
       };
       document.addEventListener('click', (e) => {
         const target = e.target.closest('.btn, .chip, .copy, summary');
-        if (!target) return;
+        if (!target || reduce.matches) return;
         if (e.detail === 0) {                       // keyboard activation: burst from the element itself
           const r = target.getBoundingClientRect();
           burst(r.left + r.width / 2, r.top + r.height / 2);
