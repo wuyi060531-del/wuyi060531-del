@@ -9,6 +9,23 @@ const $$ = (sel) => [...document.querySelectorAll(sel)];
 export function initUI() {
   root.classList.add('js');
 
+  // Keep fragment navigation clear of the fixed header when the navigation reflows.
+  const header = document.querySelector('.site-header');
+  let anchorInset = Number.parseFloat(getComputedStyle(root).scrollPaddingTop);
+  const updateAnchorInset = () => {
+    const inset = Math.max(94, Math.ceil(header.getBoundingClientRect().bottom) + 16);
+    if (inset === anchorInset) return;
+    const target = document.getElementById(location.hash.slice(1));
+    // A restored language may wrap the bar after the browser has already followed the fragment.
+    const pinned = inset > anchorInset && target &&
+      Math.abs(target.getBoundingClientRect().top - anchorInset) < 2;
+    anchorInset = inset;
+    root.style.setProperty('--site-header-inset', `${inset}px`);
+    if (pinned) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+  };
+  updateAnchorInset();
+  if ('ResizeObserver' in window) new ResizeObserver(updateAnchorInset).observe(header);
+
   /* ---- reveal on scroll ---- */
   const revealEls = $$('.reveal');
   if (!('IntersectionObserver' in window) || reduce.matches) {

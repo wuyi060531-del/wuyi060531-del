@@ -21,6 +21,81 @@ def key(browser, value, number):
         browser.call("Input.dispatchKeyEvent", event)
 
 
+def check_hero_and_anchors(b, base, output):
+    nav = 'a[data-nav="architecture"]'
+    intro = '#architecture .section-head h2, #architecture .section-head p'
+    card = "#flow-signalhub"
+    measurements = {}
+
+    for width, height in ((320, 700), (375, 812), (390, 844), (768, 900), (1440, 900)):
+        b.size(width, height)
+        b.visit(base)
+        b.wait("!document.querySelector('.stage-controls').hidden")
+        hero_gap = b.js("""Math.round(document.querySelector('#hero-title').getBoundingClientRect().top -
+            document.querySelector('.site-header').getBoundingClientRect().bottom)""")
+        assert b.js("""document.documentElement.lang === 'zh-CN' &&
+            document.documentElement.scrollWidth === innerWidth &&
+            [...document.querySelectorAll('.lead-phrase')].map(n => n.textContent).join('/') === '毕业/数据开发/Java 后端/AI 应用开发/在本机运行/、带测试' &&
+            [...document.querySelectorAll('.lead-phrase')].every(n => n.getClientRects().length === 1) &&
+            document.querySelector('.cta a[href="https://github.com/wuyi060531-del"]').getBoundingClientRect().height >= 44 &&
+            document.querySelector('[data-tour-start]').getBoundingClientRect().height >= 44"""), width
+        b.screenshot(output, "v3-polish-desktop.webp" if width == 1440 else f"v3-polish-{width}.webp")
+
+        def visible_distance(selector):
+            return b.js(f"""(() => {{
+                const header = document.querySelector('.site-header').getBoundingClientRect().bottom;
+                const elements = [...document.querySelectorAll({json.dumps(selector)})];
+                const rects = elements.map(element => element.getBoundingClientRect());
+                if (!rects.length || rects.some(rect => rect.bottom > innerHeight)) return -1;
+                return Math.round(Math.min(...rects.map(rect => rect.top)) - header);
+            }})()""")
+
+        x, y = b.js(f"""(() => {{
+            const r = document.querySelector({json.dumps(nav)}).getBoundingClientRect();
+            return [r.x + r.width / 2, r.y + r.height / 2];
+        }})()""")
+        for kind in ("mousePressed", "mouseReleased"):
+            b.call("Input.dispatchMouseEvent", {"type": kind, "button": "left", "x": x, "y": y, "clickCount": 1})
+        b.wait("location.hash === '#architecture'")
+        clicked = visible_distance(intro)
+        if width == 1440:
+            b.wait("document.body.dataset.scene === 'forest'")
+            b.screenshot(output, "v3-polish-architecture.webp")
+
+        b.visit(base + "index.html#architecture")
+        direct = visible_distance(intro)
+        b.visit(base)
+        b.js(f"document.querySelector({json.dumps(nav)}).focus()")
+        key(b, "Enter", 13)
+        b.wait("location.hash === '#architecture'")
+        keyboard = visible_distance(intro)
+        key(b, "Tab", 9)
+        assert b.js("document.activeElement === document.querySelector('#flow-signalhub summary')"), width
+        assert min(clicked, direct, keyboard) >= 12, (width, clicked, direct, keyboard)
+
+        b.click('a[href="#flow-signalhub"]')
+        b.wait("location.hash === '#flow-signalhub'")
+        card_click = visible_distance(card + " h3")
+        assert b.js("document.querySelector('#flow-signalhub').getBoundingClientRect().top >= document.querySelector('.site-header').getBoundingClientRect().bottom + 12"), width
+        b.visit(base + "index.html#flow-signalhub")
+        card_direct = visible_distance(card + " h3")
+        assert b.js("document.querySelector('#flow-signalhub').getBoundingClientRect().top >= document.querySelector('.site-header').getBoundingClientRect().bottom + 12"), width
+        assert min(card_click, card_direct) >= 12, (width, card_click, card_direct)
+        measurements[width] = {"heroGapPx": hero_gap, "introGapsPx": [clicked, direct, keyboard],
+                               "cardHeadingGapsPx": [card_click, card_direct]}
+
+    b.size(320, 700)
+    b.visit(base)
+    b.click('[data-language="en"]')
+    b.wait("document.documentElement.lang === 'en'")
+    assert b.js("document.querySelector('.hero .lead').textContent.includes('data engineering, Java backend, or applied AI.')")
+    b.visit(base + "index.html#flow-signalhub")
+    b.wait("document.documentElement.lang === 'en'")
+    b.wait("document.querySelector('#flow-signalhub').getBoundingClientRect().top >= document.querySelector('.site-header').getBoundingClientRect().bottom + 12")
+    b.click('[data-language="zh"]')
+    return measurements
+
+
 def check_v3(b, base, output):
     b.call("Page.bringToFront")
     b.motion("reduce")
@@ -53,6 +128,8 @@ def check_v3(b, base, output):
             })()"""), (width, lang)
     b.size(844, 390)
     assert b.js("document.documentElement.scrollWidth === innerWidth")
+    layout = check_hero_and_anchors(b, base, output)
+    b.visit(base)
     b.size(1440, 900)
     b.click('[data-language="en"]')
     b.js("document.querySelector('[data-tour-start]').focus()")
@@ -106,6 +183,9 @@ def check_v3(b, base, output):
     b.visit(base + "index.html")
     b.click("#flow-dataguard summary")
     assert b.js("document.querySelector('#flow-dataguard details').open")
+    b.size(320, 700)
+    b.visit(base + "#flow-signalhub")
+    assert b.js("document.querySelector('#flow-signalhub').getBoundingClientRect().top >= document.querySelector('.site-header').getBoundingClientRect().bottom + 12")
     b.call("Emulation.setScriptExecutionDisabled", {"value": False})
 
     b.motion("no-preference")
@@ -179,7 +259,7 @@ WebGLRenderingContext.prototype.drawArrays = function(...args) { forestDraws++; 
     assert not b.errors, b.errors
     external = sorted(url for url in b.requests if urlsplit(url).scheme in ("https", "http") and urlsplit(url).netloc != urlsplit(base).netloc)
     assert not external, external
-    return {"widths": WIDTHS, "languages": ["zh-CN", "en"], "landscape": [844, 390],
+    return {"widths": WIDTHS, "languages": ["zh-CN", "en"], "landscape": [844, 390], "heroAndAnchors": layout,
             "tour": "keyboard, six steps, back and Escape", "architecture": "keyboard and no JavaScript",
             "demos": DEMOS, "noScriptPages": 4, "watchdog": "simulated low frame rate",
             "saveData": "no scene load", "contextLoss": "actual WEBGL_lose_context on forest",

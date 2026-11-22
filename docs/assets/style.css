@@ -286,7 +286,7 @@ footer p { margin: 0 0 8px; max-width: 80ch; }
 
 /* V3: keep the horizon and scene visible next to the reading column. */
 [hidden] { display: none !important; }
-html { scroll-padding-top: 94px; }
+html { scroll-padding-top: var(--site-header-inset, 94px); }
 .hero { padding-bottom: 88px !important; }
 .hero-frame { position: relative; }
 .hero-inner { max-width: min(760px, 68vw); padding-bottom: 38px; }
@@ -294,6 +294,8 @@ html { scroll-padding-top: 94px; }
 .hero h1 .ph { text-wrap: balance; }
 .hero .kicker { margin-bottom: 16px; }
 .hero .lead { max-width: 43ch; margin-bottom: 26px; }
+:lang(zh) .hero .lead { max-width: 51ch; }
+:lang(zh) .hero .lead-phrase { white-space: nowrap; }
 .hero .hero-inner > :nth-child(3) { animation-delay: .05s; }
 .hero .hero-inner > :nth-child(4) { animation-delay: .1s; }
 @keyframes rise { from { opacity: .84; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
@@ -338,8 +340,9 @@ body[data-scene="forest"] .scene-night, body:not([data-scene="forest"]) .scene-f
   .arch .flow li:not(:last-child)::after { display: block; right: -14px; top: 22px; }
 }
 @media (max-width: 720px) {
+  html { scroll-padding-top: var(--site-header-inset, 130px); }
   .hero-inner { max-width: none; }
-  .hero { padding-top: 134px !important; padding-bottom: 84px !important; }
+  .hero { padding-top: 134px !important; padding-bottom: 84px !important; padding-bottom: clamp(84px, 15svh, 130px) !important; }
   .hero h1 { font-size: clamp(29px, 7.4vw, 52px); letter-spacing: -.04em; }
   .hero-index a { padding-inline: 8px; }
   .bar { flex-wrap: wrap; justify-content: center; }
