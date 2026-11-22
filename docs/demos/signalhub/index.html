@@ -10,22 +10,30 @@
 <link rel="stylesheet" href="../../assets/style.css">
 <link rel="stylesheet" href="../../assets/project-demo.css">
 <script type="module" src="../../assets/project-demo.js"></script>
+<script type="module" src="../../assets/language.js"></script>
 </head>
-<body class="demo-page" data-project="signalhub">
-<a class="skip" href="#experiment">跳到交互演示</a>
+<body data-title="hubTitle" class="demo-page" data-project="signalhub">
+<a class="skip" href="#experiment" data-i="skipDemo">跳到交互演示</a>
 <header class="wrap demo-bar">
   <a class="brand" href="../../index.html">wuyi</a>
-  <a href="../../index.html#projects">返回 3D 作品集</a>
-  <a href="../../index.html#run-signalhub">本地运行</a>
-  <a href="https://github.com/wuyi060531-del/signalhub/tree/5e3685912198fb5a4c5dc85eec59642d49690155">查看源码</a>
+  <a href="../../index.html#projects" data-i="demoBack">返回 3D 作品集</a>
+  <a href="../../index.html#run-signalhub" data-i="demoRun">本地运行</a>
+  <a href="https://github.com/wuyi060531-del/signalhub/tree/5e3685912198fb5a4c5dc85eec59642d49690155" data-i="demoSource">查看源码</a>
+<div class="language" role="group" aria-label="语言 / Language" hidden>
+  <button type="button" data-language="zh" lang="zh-CN" aria-pressed="true">中文</button>
+  <button type="button" data-language="en" lang="en" aria-pressed="false">EN</button>
+  <span class="visually-hidden" data-language-status role="status"></span>
+</div>
 </header>
 <main class="wrap">
   <header class="demo-intro">
-    <p class="demo-kind">Java + Python · 本地求职情报</p>
+    <p class="demo-kind" data-i="hubKind">Java + Python · 本地求职情报</p>
     <h1>SignalHub</h1>
-    <p class="demo-description">用虚构的岗位和档案，查看原文怎样入库、重放怎样去重，以及 JD 更新后评分怎样失效并重算。</p>
-    <p class="demo-flag">合成数据 · 离线运行快照。浏览器只展示、切换和筛选已记录结果。</p>
+    <p class="demo-description" data-i="hubIntro">用虚构的岗位和档案，查看原文怎样入库、重放怎样去重，以及 JD 更新后评分怎样失效并重算。</p>
+    <p class="demo-flag" data-i="demoSynthetic">合成数据 · 离线运行快照。浏览器只展示、切换和筛选已记录结果。</p>
   </header>
+  <p class="demo-scope" data-i="demoScope">演示控件和记录证据目前使用中文。</p>
+  <div lang="zh-CN">
   <p id="demo-load" role="status" hidden></p>
   <noscript><p>虚构的数据工程实习有两个 JD 版本，V2 更新后先隐藏旧分数，重算得到 84.5，个人资格仍为信息不足。 可直接打开 <a href="snapshot.json">原始结果快照</a>。</p></noscript>
   <section class="demo-panel" id="experiment" aria-labelledby="experiment-title">
@@ -67,6 +75,7 @@
     <p class="demo-muted">相关 PR。合并状态见 GitHub，本页始终使用上方的固定快照。</p>
     <ul><li><a href="https://github.com/wuyi060531-del/signalhub/pull/8">#8 空白标识校验</a> 与 <a href="https://github.com/wuyi060531-del/signalhub/pull/9">#9 结构化城市过滤</a> 可独立审查。</li><li><a href="https://github.com/wuyi060531-del/signalhub/pull/10">#10</a> 记录 #8 和 #9 的联跑证据，只含文档。</li><li><a href="https://github.com/wuyi060531-del/signalhub/pull/11">#11 同批标识冲突隔离</a> 独立审查。</li></ul>
   </section>
+</div>
 </main>
 <footer><div class="wrap"><a href="../../index.html#projects">返回项目列表</a> · <a href="../../THIRD_PARTY_NOTICES.md">第三方许可证</a> · <a href="../../index.html#about">AI 协助声明</a></div></footer>
 </body>

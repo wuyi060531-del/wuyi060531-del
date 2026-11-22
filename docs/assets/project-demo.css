@@ -44,3 +44,11 @@
   .demo-panel .flow { justify-content: start; }
   .demo-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.language { display: inline-flex; align-items: center; gap: 4px; }
+.language button { min-height: 38px; padding: 0 .65rem; color: #d9e2f3; background: #151c29; border: 1px solid #48556b; border-radius: 8px; font: inherit; cursor: pointer; }
+.language button[aria-pressed="true"] { color: #ffe2a8; border-color: #f5c97a; }
+.language button:focus-visible { outline: 2px solid #ffe2a8; outline-offset: 2px; }
+.language[hidden] { display: none; }
+.language .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.demo-scope { color: #b9c7de; font-size: .85rem; margin-block: .65rem; }

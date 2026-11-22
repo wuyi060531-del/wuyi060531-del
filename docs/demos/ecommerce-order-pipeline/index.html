@@ -4,17 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <title>订单管道静态演示 Order Pipeline Static Demo</title>
 <meta name="description" content="E-Commerce Order Pipeline 的静态演示：在合成样本上离线运行项目真实代码得到的结果，未连接任何数据库或服务。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0f1a'/%3E%3Cpath d='M7 22V10m6 12V14m6 8V8m6 14V12' stroke='%2338bdf8' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="demo.css">
 <noscript><link rel="stylesheet" href="demo-nojs.css"></noscript>
+<link rel="stylesheet" href="../../assets/project-demo.css">
+<script type="module" src="../../assets/language.js"></script>
 </head>
-<body>
-<a class="skip-link" href="#main">跳到正文</a>
+<body data-title="orderTitle">
+<a class="skip-link" href="#main" data-i="skipDemo">跳到正文</a>
 
-<div class="banner" role="note" aria-label="演示性质说明">
+<div class="banner" lang="zh-CN" role="note" aria-label="演示性质说明">
   <div class="wrap banner-inner">
     <span class="banner-tag">静态演示 · STATIC</span>
     <p><strong>这是一个静态示意页。</strong>页面里的所有数字，都是在离线环境里用项目的真实代码处理<strong>合成样本数据</strong>（30 行虚构订单）后记录下来的结果；页面<strong>没有连接任何运行中的数据库或服务</strong>，按钮只是在回放已记录的结果。
@@ -24,16 +26,21 @@
 
 <header class="hero">
   <div class="wrap">
-    <nav aria-label="作品集导航">
-      <a href="../../index.html#projects">返回 3D 作品集</a> ·
-      <a href="../../index.html#run-order">本地运行</a> ·
-      <a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline/tree/21017a1617bc369cd8c418debc049456c0b8ac91/docs/demo">固定版本演示源码</a>
+    <nav aria-label="作品集导航" data-i-label="demoNav">
+      <a href="../../index.html#projects" data-i="demoBack">返回 3D 作品集</a> ·
+      <a href="../../index.html#run-order" data-i="demoRun">本地运行</a> ·
+      <a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline/tree/21017a1617bc369cd8c418debc049456c0b8ac91/docs/demo" data-i="demoSource">固定版本演示源码</a>
     </nav>
-    <p class="eyebrow">ecommerce-order-pipeline</p>
-    <h1>订单 ETL 可视化演示 <span lang="en" class="h1-en">Order Pipeline Demo</span></h1>
-    <p class="lede">读取 CSV，隔离坏行，用整数分计算金额，在一个事务里写入数据库，再用 SQL 对账。重跑不会产生重复数据。<span lang="en"> Small batch ETL in Python: quarantine with an audit trail, money in integer cents, one-transaction load, SQL reconciliation, idempotent reruns.</span></p>
-    <div id="hero-facts" class="facts needs-js" aria-label="三个关键事实"></div>
-    <nav class="steps-nav needs-js" aria-label="演示步骤">
+    <div class="language" role="group" aria-label="语言 / Language" hidden>
+  <button type="button" data-language="zh" lang="zh-CN" aria-pressed="true">中文</button>
+  <button type="button" data-language="en" lang="en" aria-pressed="false">EN</button>
+  <span class="visually-hidden" data-language-status role="status"></span>
+</div>
+    <p class="eyebrow" lang="en">ecommerce-order-pipeline</p>
+    <h1><span data-i="orderHeading">订单 ETL 可视化演示</span></h1>
+    <p class="lede" data-i="orderIntro">读取 CSV，隔离坏行，用整数分计算金额，在一个事务里写入数据库，再用 SQL 对账。重跑不会产生重复数据。</p>
+    <div id="hero-facts" lang="zh-CN" class="facts needs-js" aria-label="三个关键事实"></div>
+    <nav class="steps-nav needs-js" lang="zh-CN" aria-label="演示步骤">
       <ol>
         <li><a href="#s-rows">输入与清洗</a></li>
         <li><a href="#s-counts">数量</a></li>
@@ -45,7 +52,8 @@
   </div>
 </header>
 
-<main id="main" class="wrap">
+<p class="wrap demo-scope" data-i="demoScope">演示控件和记录证据目前使用中文。</p>
+<main id="main" class="wrap" lang="zh-CN">
 <!-- build:static -->
 <section id="static-summary" aria-labelledby="static-title"><h2 id="static-title">静态摘要 <span lang="en">Static summary</span></h2><p>浏览器未启用 JavaScript，下面是同一份 demo-data.json 的文字摘要；交互视图需要启用 JavaScript。</p><h3>数量</h3><table><tbody><tr><th scope="row">原始行</th><td>30</td></tr><tr><th scope="row">接收</th><td>26</td></tr><tr><th scope="row">隔离</th><td>3</td></tr><tr><th scope="row">重复副本</th><td>1</td></tr><tr><th scope="row">paid 订单</th><td>11</td></tr><tr><th scope="row">paid 销售额</th><td>66.00 元（6600 分）</td></tr></tbody></table><h3>被隔离、丢弃或带警告的行</h3><table><thead><tr><th>记录</th><th>订单号</th><th>结果</th><th>规则</th></tr></thead><tbody><tr><td class="nw">11</td><td class="nw">SYN010</td><td class="nw">接收</td><td>missing_city（fill_unknown）</td></tr><tr><td class="nw">12</td><td class="nw">SYN011</td><td class="nw">接收</td><td>invalid_time（set_null）</td></tr><tr><td class="nw">13</td><td class="nw">SYN012</td><td class="nw">接收</td><td>missing_city（fill_unknown）</td></tr><tr><td class="nw">28</td><td class="nw">SYN027</td><td class="nw">隔离</td><td>invalid_quantity（quarantine）</td></tr><tr><td class="nw">29</td><td class="nw">SYN028</td><td class="nw">隔离</td><td>invalid_price（quarantine）</td></tr><tr><td class="nw">30</td><td class="nw">SYN029</td><td class="nw">隔离</td><td>invalid_quantity（quarantine）</td></tr><tr><td class="nw">31</td><td class="nw">SYN013</td><td class="nw">重复副本</td><td>exact_duplicate（drop_duplicate）</td></tr></tbody></table><h3>SQL 对账</h3><table><thead><tr><th>项目</th><th>SQL</th><th>对照值</th><th>结果</th></tr></thead><tbody><tr><td>paid 销售额（分）</td><td class="nw">6600</td><td>6600（独立重算：标准库 csv + Decimal 直读原始文件（仅覆盖本样本））</td><td class="nw">一致</td></tr><tr><td>paid 销售额（分）</td><td class="nw">6600</td><td>6600（Pandas / Decimal 本批汇总）</td><td class="nw">一致</td></tr><tr><td>paid 订单数</td><td class="nw">11</td><td>11（Pandas 本批汇总）</td><td class="nw">一致</td></tr><tr><td>入库订单数</td><td class="nw">26</td><td>26（质量层接收订单数）</td><td class="nw">一致</td></tr><tr><td>城市分组合计（分）</td><td class="nw">6600</td><td>6600（SQL 全库 paid 总额）</td><td class="nw">一致</td></tr><tr><td>商品分组合计（分）</td><td class="nw">6600</td><td>6600（SQL 全库 paid 总额）</td><td class="nw">一致</td></tr><tr><td>原始行 = 接收 + 隔离 + 重复</td><td class="nw">30</td><td>30（三类之和）</td><td class="nw">一致</td></tr></tbody></table><h3>事务失败与重跑</h3><ul><li>同一文件重跑：接收 26，写入 0，未变化 26；数据库状态完全相同。</li><li>第二批写入失败：失败前事务内已有 2 次写入，数据库报错后整批回滚；订单 26 → 26，批次 1 → 1，问题记录 7 → 7，状态完全相同。</li><li>修正后重跑：接收 27，写入 2，未变化 25；订单 27，paid 销售额 72.00 元。</li></ul></section>
 <!-- /build:static -->
@@ -103,7 +111,7 @@
 </div>
 </main>
 
-<footer class="wrap site-footer">
+<footer lang="zh-CN" class="wrap site-footer">
   <p>数据由 <code>python -m scripts.build_demo_data</code> 生成并写入 <code>demo-data.json</code>，同一份数据内嵌在本页中；<code>--check</code> 会在数据与流水线不一致时失败，并由测试在 CI 中运行。</p>
   <p id="meta-line" class="mono muted"></p>
 </footer>

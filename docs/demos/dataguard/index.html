@@ -10,22 +10,30 @@
 <link rel="stylesheet" href="../../assets/style.css">
 <link rel="stylesheet" href="../../assets/project-demo.css">
 <script type="module" src="../../assets/project-demo.js"></script>
+<script type="module" src="../../assets/language.js"></script>
 </head>
-<body class="demo-page" data-project="dataguard">
-<a class="skip" href="#experiment">跳到交互演示</a>
+<body data-title="guardTitle" class="demo-page" data-project="dataguard">
+<a class="skip" href="#experiment" data-i="skipDemo">跳到交互演示</a>
 <header class="wrap demo-bar">
   <a class="brand" href="../../index.html">wuyi</a>
-  <a href="../../index.html#projects">返回 3D 作品集</a>
-  <a href="../../index.html#run-dataguard">本地运行</a>
-  <a href="https://github.com/wuyi060531-del/dataguard/tree/bcbabb0e9b4fca7cd26d3234e640d3f7a4a08cb3">查看源码</a>
+  <a href="../../index.html#projects" data-i="demoBack">返回 3D 作品集</a>
+  <a href="../../index.html#run-dataguard" data-i="demoRun">本地运行</a>
+  <a href="https://github.com/wuyi060531-del/dataguard/tree/bcbabb0e9b4fca7cd26d3234e640d3f7a4a08cb3" data-i="demoSource">查看源码</a>
+<div class="language" role="group" aria-label="语言 / Language" hidden>
+  <button type="button" data-language="zh" lang="zh-CN" aria-pressed="true">中文</button>
+  <button type="button" data-language="en" lang="en" aria-pressed="false">EN</button>
+  <span class="visually-hidden" data-language-status role="status"></span>
+</div>
 </header>
 <main class="wrap">
   <header class="demo-intro">
-    <p class="demo-kind">Java · 订单 CSV 质量检测</p>
+    <p class="demo-kind" data-i="guardKind">Java · 订单 CSV 质量检测</p>
     <h1>DataGuard</h1>
-    <p class="demo-description">从一份合成订单 CSV 出发，按真实报告追查有问题的行、字段和规则。</p>
-    <p class="demo-flag">合成数据 · 离线运行快照。浏览器只展示、切换和筛选已记录结果。</p>
+    <p class="demo-description" data-i="guardIntro">从一份合成订单 CSV 出发，按真实报告追查有问题的行、字段和规则。</p>
+    <p class="demo-flag" data-i="demoSynthetic">合成数据 · 离线运行快照。浏览器只展示、切换和筛选已记录结果。</p>
   </header>
+  <p class="demo-scope" data-i="demoScope">演示控件和记录证据目前使用中文。</p>
+  <div lang="zh-CN">
   <p id="demo-load" role="status" hidden></p>
   <noscript><p>内置合成样本有 40 条，29 条正常、11 条异常，质量分 72.50%。 可直接打开 <a href="snapshot.json">原始结果快照</a>。</p></noscript>
   <section class="demo-panel" id="experiment" aria-labelledby="experiment-title">
@@ -62,6 +70,7 @@
     <p class="demo-muted">相关 PR。合并状态见 GitHub，本页始终使用上方的固定快照。</p>
     <ul><li><a href="https://github.com/wuyi060531-del/dataguard/pull/13">#13 移动端订单编号</a></li><li><a href="https://github.com/wuyi060531-del/dataguard/pull/15">#15 历史数据集分页</a></li><li><a href="https://github.com/wuyi060531-del/dataguard/pull/16">#16 运行中补写失败终态</a></li></ul>
   </section>
+</div>
 </main>
 <footer><div class="wrap"><a href="../../index.html#projects">返回项目列表</a> · <a href="../../THIRD_PARTY_NOTICES.md">第三方许可证</a> · <a href="../../index.html#about">AI 协助声明</a></div></footer>
 </body>
