@@ -43,12 +43,12 @@ Reads order CSV, quarantines bad rows, calculates money in integer cents, loads 
 
 ## Checkable evidence 可核对的证据
 
-Every figure below comes from the linked README; none is a user count or business result. 下面的数字都来自对应仓库的 README，不是用户量或业务收益。
+These figures come from linked synthetic runs, source revisions and CI evidence. 下表数字来自链接中的合成结果、源码版本和 CI。
 
 | Evidence 证据 | Where to check 核对位置 |
 |---|---|
 | Built-in sample: 40 synthetic orders → 29 ok / 11 abnormal / 11 issues, quality score 72.50% 内置 40 条合成订单：29 正常 / 11 异常 / 11 个问题，质量分 72.50% | [DataGuard README](https://github.com/wuyi060531-del/dataguard#快速演示) |
-| 96 Java tests, 6 of them need a real MySQL and CI requires zero skipped 96 项 Java 测试，其中 6 项需真实 MySQL，CI 要求零跳过 | [DataGuard README](https://github.com/wuyi060531-del/dataguard#测试) |
+| DataGuard baseline bcbabb0: 96 Java tests, 6 using real MySQL without skips. DataGuard 基线 bcbabb0 的 96 项 Java 测试包含 6 项真实 MySQL 测试，零跳过。 | [Pinned DataGuard CI](https://github.com/wuyi060531-del/dataguard/actions/runs/42838667209) |
 | 30 input rows = 26 accepted + 3 quarantined + 1 duplicate; re-running writes 0 rows 30 行输入 = 26 接收 + 3 隔离 + 1 重复；重跑写入 0 行 | [Order Pipeline README](https://github.com/wuyi060531-del/ecommerce-order-pipeline#快速运行) |
 | Schema created and evolved only by Flyway migrations V1–V12 表结构只通过 Flyway V1–V12 迁移创建和演进 | [SignalHub README](https://github.com/wuyi060531-del/signalhub#架构) |
 

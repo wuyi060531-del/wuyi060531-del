@@ -1,6 +1,6 @@
 {
  ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
- "README.md": "abc3f12faee8d94e4c552ba68efd4f227982f7bc45fd3b5f521a9ab3a2943f93",
+ "README.md": "bebe5b989c2c281f71333dc08e7640837a254df5c2a90cc7ce523dff040081a1",
  "THIRD_PARTY_NOTICES.md": "662054d2243380ff80d286cd1048969af9a4a5e5dd07fe2f691323bf7976aef6",
  "assets/forest-poster.webp": "fcc5f3c9540e26f200693787851cf014c0d6123dd2f4fadd06e58fa76c075979",
  "assets/forest.js": "784bae99c80aba77507170afc8f60f1622d60ae9d909c6c07cb152219ce6648c",
@@ -20,17 +20,17 @@
  "assets/temple-night.js": "3238200cb711258df4c756bb3befa92f2e11a42d726113d30571348ca4af26e5",
  "assets/ui.js": "f04353701a9511a9a288ae78062e992c6fdb08e1ed149aadae0e9d22b36410d8",
  "demos/dataguard/empty.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
- "demos/dataguard/index.html": "cc65cc4d0b63cfe4a141498aafaf36daa44263d9b69f778d789f521108e88ada",
+ "demos/dataguard/index.html": "c41a6f8b9b4180b55db2c1f1ee0c4f600dfd0e85df1ffcbd6da1db058c36e333",
  "demos/dataguard/orders.csv": "7ebbaa0f671496df9c30f2f9b8e1f5c2bbd4f00faa57ebeb8d6597724548c725",
  "demos/dataguard/snapshot.json": "069e5a7bbd5621e543b3e7e3dd3f82c4007ac85817db38e6a09e397edc362e11",
  "demos/dataguard/warning.csv": "1fd40358d70a6a6b596d9015fc479419ffcdc67b22ee616c5a0cbc435e9fed7b",
- "demos/ecommerce-order-pipeline/SOURCE.md": "9d91fc0ee2eaba823385c1279a03a210e640bd7c5783eba9fbc9d7496c4d1aed",
+ "demos/ecommerce-order-pipeline/SOURCE.md": "96b00e40618e754b4cd29fe6efd34e6ea308f5bbdac3be3fe1e3096e02240b35",
  "demos/ecommerce-order-pipeline/demo-data.json": "1ff7b961b6686d5b43abcc3a40ecf4432fba69b9c87f17c766b1d078bae3fd27",
  "demos/ecommerce-order-pipeline/demo-nojs.css": "d1083f448306b68b2053bc6774734be6b54a84b15bc85b9bbae4e5f5107d199c",
  "demos/ecommerce-order-pipeline/demo.css": "3345801e15b09ca3307e121f977e5635215b9b355c45d8573db9428a00555ef1",
  "demos/ecommerce-order-pipeline/demo.js": "e301d6c67c7a76a672361c79f544ecb14f8ab48479da03950beb5712549dce0e",
- "demos/ecommerce-order-pipeline/index.html": "4a29f202ddb88ddc6c0aba5c490dc243b25f678307dc3de05b5dbede1914bd0e",
- "demos/signalhub/index.html": "f3b1d96547944a52592800377a561cec6992c1203481006142f970b203e0a93f",
+ "demos/ecommerce-order-pipeline/index.html": "bbbdae3432641d16b803affb83e48e49a99361c4e1e8ccc1d29ad49315dcacb1",
+ "demos/signalhub/index.html": "f11030e8bbfa6327a9a94d6cda55844019cacc2f4b0aaaf3313e8c490eb3ffce",
  "demos/signalhub/snapshot.json": "c9ac3f8b528c25ca9085b271369c178f62a55329b4896f818a5ea02b515bf8d1",
  "evidence/README.md": "cedd34749a7b183015f26c8a2dfecc7481e581d6c5b52dc190b871d1c2d7872a",
  "evidence/compare-hero-v1-v2.webp": "390126f666456ca48f4f1852da553e2c361e3622d0238fe9c121480e273a5753",
@@ -54,5 +54,5 @@
  "evidence/v1-desktop-reduced-motion.webp": "3c62a970512da6c27f139d88c0d1e16c267f1e1224455919e139b4ff1500d6ff",
  "evidence/v1-mobile-hero.webp": "093472fd1c81771c77efd0f9269c5b242e1738a0f8291c0617d3739120624782",
  "evidence/v1-tablet-hero.webp": "6ed209bc175e7a61fb886c66702a3d74c89c88410a3baeee2ee11c2c97145b12",
- "index.html": "7def10788dc7123d349e6a75d5c69a296691f7d20ba78db28aa2ac8f2abf7f15"
+ "index.html": "540b7ced5131b440722ae25ed69c55652369b845f0cd767d385a0eb989dc7738"
 }

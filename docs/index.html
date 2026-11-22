@@ -82,7 +82,7 @@
           <h3 id="p-signalhub">SignalHub</h3>
           <p class="one">岗位会过期，“技能匹配”不等于“有资格”。SignalHub 在本机保存官方链接、JD 原文和版本历史，用可解释的规则打分，并跟踪投递进度。</p>
           <ul>
-            <li>Java 与 Python Worker 通过同一个 PostgreSQL 任务队列协作：<code>FOR UPDATE SKIP LOCKED</code> 领取任务，15 分钟租约加 <code>attempts</code> 防止旧 Worker 覆盖新结果，最多重试 3 次，重放幂等。</li>
+            <li>Java 与 Python Worker 通过同一个 PostgreSQL 任务队列协作：<code>FOR UPDATE SKIP LOCKED</code> 领取任务，15 分钟租约加 <code>attempts</code> 防止旧 Worker 覆盖新结果，最多重试 3 次，同内容重放会去重。</li>
             <li>JD 变化会生成新版本，旧匹配分数随即隐藏并重算。评分只说明条件匹配程度，不是录用概率。</li>
             <li>合成演示里的“数据工程实习”重算得 84.5/100；JD 没写到岗时间，所以“招聘资格”显示“信息不足”，而不是硬判通过。</li>
           </ul>
@@ -134,11 +134,11 @@
           <p class="one">读取订单 CSV，隔离坏行并留下审计记录，用整数分计算金额，在一个事务里写库，再用 SQL 对账。重跑不会产生重复数据。</p>
           <ul>
             <li>30 行合成订单 = 26 接收 + 3 隔离 + 1 重复副本；11 笔 <code>paid</code> 订单合计 66.00 元。</li>
-            <li>同一份文件第二次加载：写入 0 行、未变化 26，这就是幂等重跑。</li>
+            <li>规则和输入相同，第二次加载：写入 0 行、未变化 26，这就是幂等重跑。</li>
             <li>CI 覆盖 Python 3.10 / 3.12、MySQL 8.4 真实集成，以及 Docker 构建与冒烟测试。</li>
           </ul>
           <ul class="chips" aria-label="技术栈"><li>Python</li><li>Pandas</li><li>SQLite / MySQL</li><li>pytest</li><li>GitHub Actions</li></ul>
-          <p class="limit"><strong>限制：</strong>仅合成数据；性能脚本是单机实验，不代表生产性能。站内静态演示是该项目 <a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline/pull/7">PR #7</a>（尚未合并）在 commit 21017a1 的快照。</p>
+          <p class="limit"><strong>限制：</strong>仅合成数据；性能脚本是单机实验，不代表生产性能。站内静态演示是该项目 <a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline/pull/7">PR #7</a>在 commit 21017a1 生成的快照。</p>
           <div class="links">
             <a class="btn sm" href="demos/ecommerce-order-pipeline/index.html">打开静态演示 Open demo</a>
             <a class="btn sm" href="https://github.com/wuyi060531-del/ecommerce-order-pipeline">源码 Source</a>
@@ -157,13 +157,13 @@
       <div class="section-head reveal">
         <p class="eyebrow">02 · Evidence</p>
         <h2 id="evidence-title">可验证事实 <span lang="en">Checkable facts</span></h2>
-        <p>下面每个数字都来自对应仓库的 README，点开可以核对；它们不是用户量或业务收益。</p>
+        <p>以下数字来自固定源码版本的合成运行和测试记录。</p>
       </div>
       <ul class="stats">
-        <li class="stat glow reveal"><b>29 / 11 / 11</b><span>DataGuard 内置样本：正常记录 / 异常记录 / 问题数，质量分 72.50%。</span><a href="https://github.com/wuyi060531-del/dataguard#快速演示">README</a></li>
-        <li class="stat glow reveal"><b>30 = 26+3+1</b><span>订单管道：接收 / 隔离 / 重复副本；重跑写入 0 行。</span><a href="https://github.com/wuyi060531-del/ecommerce-order-pipeline#快速运行">README</a></li>
-        <li class="stat glow reveal"><b>6 项零跳过</b><span>DataGuard 共 96 项 Java 测试，其中 6 项需要真实 MySQL，CI 要求它们零跳过。</span><a href="https://github.com/wuyi060531-del/dataguard#测试">README</a></li>
-        <li class="stat glow reveal"><b>Flyway V1–V12</b><span>SignalHub 的表结构只通过 12 个迁移脚本创建和演进。</span><a href="https://github.com/wuyi060531-del/signalhub#架构">README</a></li>
+        <li class="stat glow reveal"><b>29 / 11 / 11</b><span>DataGuard 内置样本：正常记录 / 异常记录 / 问题数，质量分 72.50%。</span><a href="demos/dataguard/snapshot.json">结果快照</a></li>
+        <li class="stat glow reveal"><b>30 = 26+3+1</b><span>订单管道：接收 / 隔离 / 重复副本；重跑写入 0 行。</span><a href="demos/ecommerce-order-pipeline/demo-data.json">结果快照</a></li>
+        <li class="stat glow reveal"><b>6 项零跳过</b><span>DataGuard 快照基线 bcbabb0 的 CI 验证 96 项 Java 测试，其中 6 项使用真实 MySQL。</span><a href="https://github.com/wuyi060531-del/dataguard/actions/runs/42838667209">该版本的 CI</a></li>
+        <li class="stat glow reveal"><b>Flyway V1–V12</b><span>SignalHub 的表结构只通过 12 个迁移脚本创建和演进。</span><a href="https://github.com/wuyi060531-del/signalhub/tree/5e3685912198fb5a4c5dc85eec59642d49690155/backend-java/src/main/resources/db/migration">迁移源码</a></li>
       </ul>
       <p class="note reveal">测试数量会随提交变化，请以各仓库 README 和 GitHub Actions 的最新记录为准。</p>
     </div>

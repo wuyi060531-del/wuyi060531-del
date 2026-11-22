@@ -31,7 +31,7 @@ python3.12 scripts/check_site.py --update
 python3.12 scripts/check_site.py
 ```
 
-重采 DataGuard 时 Python 环境须有 `httpx`，SignalHub 使用项目本身的测试依赖即可。站点运行仍不需要这些依赖。新演示中的合成输入和结果来自两个 MIT 项目，上游代码与声明见各演示页的固定源码链接。
+重采 DataGuard 时 Python 环境须有 `httpx`，SignalHub 使用项目本身的测试依赖即可。站点运行仍不需要这些依赖。新演示中的合成输入和结果来自两个 MIT 项目，上游代码与声明见各演示页的固定源码链接。PR 链接提供当前状态，发布工程代码不会自行变更本站的固定快照。
 
 ### 复跑浏览器检查
 
